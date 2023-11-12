@@ -28,17 +28,23 @@ header {
     overflow: hidden;
 }
 
-.equipment-list {
-    list-style: none;
-    padding: 0;
+.equipment-table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.equipment-list li {
-    border-bottom: 1px solid #ddd;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.equipment-header th,
+.equipment-item td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.equipment-header th {
+    background-color: #f2f2f2;
+}
+tr:hover {
+    background-color: #f7f7f7;
 }
 
 .average-rating {
