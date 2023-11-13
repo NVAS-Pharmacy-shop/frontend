@@ -5,23 +5,10 @@ import {  TextField, Button, Typography, Container, Grid, ThemeProvider, CssBase
 import NotificationsIcon, { Copyright } from '@mui/icons-material'
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
 import './company-edit.css';
 
 
-interface Company {
-    name: string;
-    address: string;
-    description: string;
-    email: string;
-    website: string;
-    rate: number;
-    equipment: Equipment[];
-}
-interface Equipment {
-    name: string;
-    description: string;
-    quantity: number;
-}
 interface Admin {
   username: string;
   email: string;
@@ -32,10 +19,38 @@ interface Admin {
 function CompanyUpdate(){
     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5ODc5ODUwLCJpYXQiOjE2OTk3OTM0NTAsImp0aSI6IjJiYzQxNzg5Y2RjNzQ0MDhhN2Y1ZmZkYTQ4NWZiYjI3IiwidXNlcl9pZCI6MiwiZW1haWwiOiJ1c2VyMUB0ZXN0LmNvbSIsInJvbGUiOiJjb21wYW55X2FkbWluIn0.CIvw2TmV0YTObWQmMw8FdcvV-KaSmP8v03PLnhW_MnI'
     const {id} = useParams();
-    const [company, setCompany] = useState<Company | null>(null);
+    const [company, setCompany] = useState({
+      name: '',
+      address: '',
+      description: '',
+      email: '',
+      website: '',
+      rate: 0,
+      equipment: [
+        {
+          name: '',
+          description: '',
+          quantity: -1
+        }
+      ],
+    });
+    const [editedCompany, setEditedCompany] = useState({
+      name: '',
+      address: '',
+      description: '',
+      email: '',
+      website: '',
+      rate: 0,
+      equipment: [
+        {
+          name: '',
+          description: '',
+          quantity: -1
+        }
+      ],
+    });
     const [admins, setAdmins] = useState<Admin[]>([]);
     const [editMode, setEditMode] = useState(false);
-    const [editedCompany, setEditedCompany] = useState<Company>();
 
     useEffect(() => {
         axios.get(`http://127.0.0.1:8000/api/user/admins/${id}`,{
@@ -65,34 +80,35 @@ function CompanyUpdate(){
     }, [id]);
 
     const handleEditClick = () => {
+      setEditedCompany(company);
       setEditMode(!editMode);
     }
 
+    useEffect(() => {
+      if (!editMode) {
+        setCompany(editedCompany);
+      }
+    }, [editMode, editedCompany]);
+
+
     const handleSaveClick = () => {
-      console.log(editedCompany);
-      axios.put(`http://127.0.0.1:8000/api/company/${id}`, editedCompany, {
+      axios
+        .put(`http://127.0.0.1:8000/api/company/${id}`, editedCompany, {
           headers: {
-              'Authorization' : `Bearer ${token}`
-          }
-      })
-        .then(response => {
-            setCompany(response.data.company);
-            setEditedCompany(response.data.company);
-            console.log(editedCompany);
-            setEditMode(false);
+            Authorization: `Bearer ${token}`,
+          },
         })
-        .catch(error => {
-            console.error('Error updating company', error);
+        .then((response) => {
+          const updatedCompany = response.data;
+          setEditedCompany(updatedCompany);
+          setCompany(updatedCompany);
+        })
+        .catch((error) => {
+          console.error('Error updating company', error);
         });
-    }
-    
-    
-    const handleInputChange = (field: keyof Company, value: string) => {
-      setEditedCompany((prevCompany) => ({
-        ...prevCompany!,
-        [field]: value,
-      }));
+      setEditMode(false);
     };
+    
 
     const defaultTheme = createTheme();
     return (
@@ -149,17 +165,24 @@ function CompanyUpdate(){
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 240,
+                    height: 300,
                   }}>
-                  <div>
-                    <EditIcon onClick={handleEditClick}></EditIcon>
+                  <div className="companyinfo">
+                    <div className = "icons-container">
+                      {editMode ? (
+                          <CloseIcon onClick={handleEditClick} className="icon close-icon"></CloseIcon>
+                      ): (
+                          <EditIcon onClick={handleEditClick} className = "icon edit-icon"></EditIcon>
+                      )}
+                    </div>
+
                     {editMode ? (
                       <TextField
                         fullWidth
                         label="Company Name"
                         name="companyName"
                         value={editedCompany?.name || ""}
-                        onChange={(e) => handleInputChange("name", e.target.value)}
+                        onChange={e => setEditedCompany({...editedCompany, name: e.target.value})}
                         required
                         sx={{ marginTop: 2 }}
                       />
@@ -173,7 +196,7 @@ function CompanyUpdate(){
                         label="Description"
                         name="description"
                         value={editedCompany?.description || ""}
-                        onChange={(e) => handleInputChange("description", e.target.value)}
+                        onChange={e => setEditedCompany({...editedCompany, description: e.target.value})}
                         required
                         sx={{ marginTop: 2 }}
                       />
@@ -192,7 +215,7 @@ function CompanyUpdate(){
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 240,
+                    height: 300,
                   }}
                 >
                   <h2>Company Address</h2>
@@ -203,12 +226,15 @@ function CompanyUpdate(){
                         label="Address"
                         name="address"
                         value={editedCompany?.address || ""}
-                        onChange={(e) => handleInputChange("address", e.target.value)}
+                        onChange={e => setEditedCompany({...editedCompany, address: e.target.value})}
                         required
                       />
                     ) : (
                       <p>{editedCompany?.address || ""}</p>
                     )}
+                    <h2>Rate</h2>
+                    <p>{editedCompany?.rate || ""}</p>
+
                 </Paper>
               </Grid>
               {/* Recent Orders */}
