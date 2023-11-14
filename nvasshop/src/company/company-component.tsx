@@ -20,7 +20,7 @@ interface Equipment {
 }
 
 function Company() {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5Nzk1MzA0LCJpYXQiOjE2OTk3MDg5MDQsImp0aSI6ImMwMTQ0YjJhMDBmMjQ3ZjBiMzRhY2ZlNzUwZjAyYmE5IiwidXNlcl9pZCI6MiwiZW1haWwiOiJ1c2VyMUB0ZXN0LmNvbSIsInJvbGUiOiJjb21wYW55X2FkbWluIn0.wqbr3Yqz4J4JKYFbCgHTP6tRXTzaJCOz_UffiHXS3OY'
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAwMDAyNDUwLCJpYXQiOjE2OTk5MTYwNTAsImp0aSI6IjIyMDNkZjc5ZGRhMDRjNDQ5MmU2ZjZlZmE3MTU1MWY0IiwidXNlcl9pZCI6NCwiZW1haWwiOiJ1c2VyM0B0ZXN0LmNvbSIsInJvbGUiOiJjb21wYW55X2FkbWluIn0.udxREJ36WmsxSVbtw77nw8RQvn8TO1uZAybM_tdCHQ4'
     const {id} = useParams();
     const [company, setCompany] = useState<Company | null>(null);
 

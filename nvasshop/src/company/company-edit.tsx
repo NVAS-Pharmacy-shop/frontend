@@ -17,7 +17,7 @@ interface Admin {
 }
 
 function CompanyUpdate(){
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5ODc5ODUwLCJpYXQiOjE2OTk3OTM0NTAsImp0aSI6IjJiYzQxNzg5Y2RjNzQ0MDhhN2Y1ZmZkYTQ4NWZiYjI3IiwidXNlcl9pZCI6MiwiZW1haWwiOiJ1c2VyMUB0ZXN0LmNvbSIsInJvbGUiOiJjb21wYW55X2FkbWluIn0.CIvw2TmV0YTObWQmMw8FdcvV-KaSmP8v03PLnhW_MnI'
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAwMDAyNDUwLCJpYXQiOjE2OTk5MTYwNTAsImp0aSI6IjIyMDNkZjc5ZGRhMDRjNDQ5MmU2ZjZlZmE3MTU1MWY0IiwidXNlcl9pZCI6NCwiZW1haWwiOiJ1c2VyM0B0ZXN0LmNvbSIsInJvbGUiOiJjb21wYW55X2FkbWluIn0.udxREJ36WmsxSVbtw77nw8RQvn8TO1uZAybM_tdCHQ4'
     const {id} = useParams();
     const [company, setCompany] = useState({
       name: '',
@@ -184,7 +184,7 @@ function CompanyUpdate(){
                         value={editedCompany?.name || ""}
                         onChange={e => setEditedCompany({...editedCompany, name: e.target.value})}
                         required
-                        sx={{ marginTop: 2 }}
+                        sx={{ marginTop: 2}}
                       />
                     ) : (
                       <h1>{editedCompany?.name || ""}</h1>

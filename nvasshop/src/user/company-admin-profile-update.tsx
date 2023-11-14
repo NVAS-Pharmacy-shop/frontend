@@ -13,7 +13,7 @@ interface Admin {
 const defaultTheme = createTheme();
 
 export default function EditCompanyAdminProfile(){
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5ODY5NTg0LCJpYXQiOjE2OTk3ODMxODQsImp0aSI6ImY4ZTU2OGEyNmM2ZDRjMzQ4YmFjNmZiMjE1NjM3YjA5IiwidXNlcl9pZCI6MiwiZW1haWwiOiJ1c2VyMUB0ZXN0LmNvbSIsInJvbGUiOiJjb21wYW55X2FkbWluIn0.ZvOyiRlZEQdJEaon96sD_aZdO9pmCsINt6wAiqtk7Qo';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAwMDAyNDUwLCJpYXQiOjE2OTk5MTYwNTAsImp0aSI6IjIyMDNkZjc5ZGRhMDRjNDQ5MmU2ZjZlZmE3MTU1MWY0IiwidXNlcl9pZCI6NCwiZW1haWwiOiJ1c2VyM0B0ZXN0LmNvbSIsInJvbGUiOiJjb21wYW55X2FkbWluIn0.udxREJ36WmsxSVbtw77nw8RQvn8TO1uZAybM_tdCHQ4';
     const [admin, setAdmin] = useState(
         {
             username: '',
