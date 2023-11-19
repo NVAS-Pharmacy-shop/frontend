@@ -1,0 +1,52 @@
+.equipment-browser {
+    width: 80%;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  
+.equipment-browser h1 {
+    text-align: center;
+    margin: 1em;
+}
+
+  .form-group {
+    margin-bottom: 1em;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 0.5em;
+    margin: 1em 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .apply-filters {
+    padding: 0.5em 1em;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: large;
+    margin-left: auto;
+    display: block;
+  }
+  
+  .equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1em;
+  }
+
+  .equipment-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .equipment-item {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 1em;
+    margin-bottom: 1em;
+  }
