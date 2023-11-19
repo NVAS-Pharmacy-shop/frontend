@@ -6,6 +6,7 @@ import CompanyUpdate from './company/company-edit';
 import EquipmentBrowser from './equipment/equipment-browser';
 import EditCompanyAdminProfile from './user/company-admin-profile-update';
 import RegisterCompany from './admin/register-company';
+import RegisterCompanyAdmin from './admin/register-company-admin';
 
 const AppRoutes = () => {
     return (
@@ -17,6 +18,7 @@ const AppRoutes = () => {
                 <Route path='/equipment' element={<EquipmentBrowser/>}></Route>
                 <Route path='/equipment/:companyId' element={<EquipmentBrowser/>}></Route>
                 <Route path='/registerCompany/' element={<RegisterCompany/>}></Route>
+                <Route path='/registerCompanyAdmin/' element={<RegisterCompanyAdmin/>}></Route>
             </Routes>
         </Router>
   )
