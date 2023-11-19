@@ -17,22 +17,46 @@ interface Equipment {
     name: string;
     description: string;
     quantity: number;
-    comapny: number;
+    company: number;
     type: number;
 }
 
-const EquipmentBrowser = () => {
+interface Company {
+    id: number;
+    name: string;
+    address: string;
+    description: string;
+    email: string;
+    website: string;
+    rate: number;
+}
+
+const EquipmentBrowser = () => {    
     const { companyId } = useParams<{ companyId?: string }>();
     const [filters, setFilters] = useState({
         company_id: companyId || '',
         name_substring: '',
         type: '',
+        company_rating: ''
     });
     const [equipment, setEquipment] = useState<Equipment[]>([]);
+    const [companies, setCompanies] = useState<{ [id: string]: Company }>({});
 
     useEffect(() => {
         fetchEquipment();
     }, []);
+
+    const fetchCompany = async (id: string) => {
+        if (companies[id]) {
+            return;
+        }
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000//api/company/base_info/${id}`);
+            setCompanies((prevCompanies) => ({ ...prevCompanies, [id]: response.data.company }));
+        } catch (error) {
+            console.error('Error fetching company:', error);
+        }
+    };
 
     const fetchEquipment = async () => {
         try {
@@ -41,6 +65,9 @@ const EquipmentBrowser = () => {
             );
             const response = await axios.get('http://127.0.0.1:8000//api/company/equipment/', { params: nonEmptyFilters });
             setEquipment(response.data.equipment);
+            const uniqueCompanyIds = new Set<string>(response.data.equipment.map((item: Equipment) => item.company.toString()));
+            uniqueCompanyIds.forEach((id: string) => fetchCompany(id));
+
         } catch (error) {
             console.error('Error fetching equipment:', error);
         }
@@ -55,7 +82,7 @@ const EquipmentBrowser = () => {
         <div className="equipment-browser">
             <h1>Equipment Browser</h1>
             <div className="form-group">
-                <label htmlFor="name_substring">Name Substring:</label>
+                <label htmlFor="name_substring">Name:</label>
                 <input type="text" name="name_substring" value={filters.name_substring} onChange={handleFilterChange} className="form-control" />
             </div>
             <div className="form-group">
@@ -70,6 +97,10 @@ const EquipmentBrowser = () => {
                     <option value="6">Orthopedic Equipment</option>
                 </select>
             </div>
+            <div className="form-group">
+                <label htmlFor="company_rating">Minimal company rating:</label>
+                <input type="number" name="company_rating" value={filters.company_rating} onChange={handleFilterChange} className="form-control" />
+            </div>
             <button onClick={fetchEquipment} className="apply-filters">Apply Filters</button>
             <ul className="equipment-list equipment-grid">
                 {equipment.map((item) => (
@@ -77,6 +108,12 @@ const EquipmentBrowser = () => {
                         <h3>{item.name}</h3>
                         <p>{item.description}</p>
                         <p>Type: {equipmentTypeMapping[item.type]}</p>
+                        {companies[item.company.toString()] && (
+                            <>
+                                <p>Company name: {companies[item.company.toString()].name}</p>
+                                <p>Company rating: {companies[item.company.toString()].rate}</p>
+                            </>
+                        )}
                     </li>
                 ))}
             </ul>
