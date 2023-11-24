@@ -43,6 +43,12 @@ export const AuthProvider = ({ children }) => {
       },
       body: JSON.stringify(user),
     });
+    let data = await response.json();
+
+    if (response.status === 200) {
+      alert("User created successfully!");
+      navigate("/login");
+    }
   };
 
   let loginUser = async (e) => {
