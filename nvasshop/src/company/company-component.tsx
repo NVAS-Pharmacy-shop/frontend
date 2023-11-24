@@ -164,6 +164,9 @@ function Company() {
                 sx={{ width: "300px", margin: "10px" }}
                 label="With Time Clock"
                 value={date}
+                onChange={(newValue) => {
+                  setDate(newValue);
+                }}
                 viewRenderers={{
                   hours: renderTimeViewClock,
                   minutes: renderTimeViewClock,

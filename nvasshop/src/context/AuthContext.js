@@ -13,6 +13,11 @@ export const AuthProvider = ({ children }) => {
       ? JSON.parse(localStorage.getItem("authTokens"))
       : null
   );
+  if (authTokens) {
+    api.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${authTokens["access"]}`;
+  }
   let [user, setUser] = useState(() =>
     localStorage.getItem("authTokens")
       ? jwtDecode(localStorage.getItem("authTokens"))
