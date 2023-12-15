@@ -14,6 +14,7 @@ import RegisterPage from "./pages/RegisterPage";
 import { AuthProvider } from "./context/AuthContext";
 import Header from "./components/Header";
 import HomePage from "./pages/HomePage";
+import UserProfilePage from "./pages/UserProfilePage/UserProfilePage";
 
 const AppRoutes = () => {
   return (
@@ -45,6 +46,7 @@ const AppRoutes = () => {
               element={<RegisterCompanyAdmin />}
             ></Route>
             <Route path="/companies" element={<CompaniesOverview />}></Route>
+            <Route path="/user" element={<UserProfilePage />}></Route>
           </Route>
           <Route path="/" element={<HomePage />}></Route>
           <Route element={<LoginPage />} path="/login" />
