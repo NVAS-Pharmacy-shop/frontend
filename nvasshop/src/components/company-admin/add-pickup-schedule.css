@@ -1,0 +1,39 @@
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    margin: auto;
+  }
+  
+  label {
+    margin-bottom: 10px;
+  }
+  
+  .MuiTextField-root {
+    width: 40%;
+    margin-top: 20px;
+  }
+  
+  .MuiSlider-root {
+    margin-top: 10px;
+    width: 40%;
+  } 
+  .pickeri
+  {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 50rem;
+    margin-top: 20px;
+  }
+  .form-container
+  {
+    display: flex;
+    flex-direction: column;
+  }
+  .form-class
+  {
+    
+  }

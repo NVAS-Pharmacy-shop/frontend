@@ -1,3 +1,5 @@
+import { TimePickerProps } from "@mui/x-date-pickers";
+
 export interface Company {
     id: number;
     name: string;
@@ -16,4 +18,14 @@ export interface Equipment {
     quantity: number;
     type: number;
     id: number;
+}
+
+export interface PickupSchedule {
+    id: number,
+    company: number,
+    administrator_firstName: string,
+    administrator_lastName: string,
+    date?: string | null;
+    start_time: string,
+    duration_minutes: number
 }

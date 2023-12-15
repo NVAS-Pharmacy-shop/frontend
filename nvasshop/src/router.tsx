@@ -14,6 +14,7 @@ import RegisterPage from "./pages/RegisterPage";
 import { AuthProvider } from "./context/AuthContext";
 import Header from "./components/Header";
 import HomePage from "./pages/HomePage";
+import AddPickupSchedule from "./components/company-admin/add-pickup-schedule";
 
 const AppRoutes = () => {
   return (
@@ -45,6 +46,7 @@ const AppRoutes = () => {
               element={<RegisterCompanyAdmin />}
             ></Route>
             <Route path="/companies" element={<CompaniesOverview />}></Route>
+            <Route path="/add-pickup-schedule/" element={<AddPickupSchedule />}></Route>
           </Route>
           <Route path="/" element={<HomePage />}></Route>
           <Route element={<LoginPage />} path="/login" />
