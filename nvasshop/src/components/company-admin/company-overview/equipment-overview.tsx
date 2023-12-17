@@ -14,6 +14,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
 } from "@mui/material";
 import { getEquipment } from "../../../service/https/equipment-service";
 import EditEquipmentDialog from "./edit-equipment-dialog";
@@ -36,20 +37,24 @@ export interface EquipmentAdminProps {
 }
 
 function EquipmentAdmin(props: EquipmentAdminProps) {
+  const [companyEquipmentAll, setCompanyEquipmentAll] = useState<Equipment[]>([]);
   const [companyEquipment, setCompanyEquipment] = useState<Equipment[]>([]);
   const [editDialogOpen, setEditDialogOpen] = useState<number | null>(null);
   const [addEquipmentDialogOpen, setAddEquipmentDialogOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const fetchEquipmentData = async () => {
     try {
       const equipmentData = await getEquipment(props.companyId);
       setCompanyEquipment(equipmentData);
+      setCompanyEquipmentAll(equipmentData);
+
     } catch (error) {
       console.error("Error fetching equipment data", error);
     }
   };
 
-   useEffect(() => {
+  useEffect(() => {
     if (props.companyId != undefined) {
       fetchEquipmentData();
     }
@@ -69,6 +74,13 @@ function EquipmentAdmin(props: EquipmentAdminProps) {
     }
   }, [editDialogOpen, addEquipmentDialogOpen, props.companyId]);
 
+  useEffect(() => {
+    const filteredEquipment = companyEquipmentAll.filter((item) => 
+      item.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setCompanyEquipment(filteredEquipment);
+  }, [searchQuery])
+
   const handleEditSave = async (editedEquipment: Equipment) => {
     handleEditDialogClose();
   };
@@ -80,6 +92,10 @@ function EquipmentAdmin(props: EquipmentAdminProps) {
   const handleAddEquipmentDialogClose = () => {
     setAddEquipmentDialogOpen(false);
   }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
 
   if (!companyEquipment) {
     return <div>Loading...</div>;
@@ -98,6 +114,15 @@ function EquipmentAdmin(props: EquipmentAdminProps) {
         >Add</Button>
         <AddEquipmentDialog open={addEquipmentDialogOpen} onClose={handleAddEquipmentDialogClose}/>
       </div>
+      <TextField
+          fullWidth
+          label="Search"
+          name="search-box"
+          value={searchQuery}
+          onChange={handleInputChange}
+          required
+          margin="normal"
+        />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 200, maxWidth: 500 }} aria-label="simple table">
           <TableHead>
