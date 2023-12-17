@@ -55,7 +55,6 @@ const AddPickupSchedule = () => {
             };
             await createPickupSchedule(pickupScheduleData);
         } catch (error) {
-            console.error('Error adding pickup schedule: ', error);
         }
     };
     

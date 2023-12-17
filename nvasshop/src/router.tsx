@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { render } from "react-dom";
 import React from "react";
 import Company from "./company/company-component";
-import CompanyUpdate from "./company/company-edit";
+import CompanyUpdate from "./components/company-admin/company-overview/company-edit";
 import EquipmentBrowser from "./equipment/equipment-browser";
 import EditCompanyAdminProfile from "./user/company-admin-profile-update";
 import RegisterCompany from "./admin/register-company";

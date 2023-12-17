@@ -31,8 +31,9 @@ import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 import "./company-edit.css";
-import api from "../api";
-import EquipmentAdmin from "../components/company-admin/company-overview/equipment-overview";
+import api from "../../../api";
+import EquipmentAdmin from "./equipment-overview";
+import AddEquipmentDialog from "./add-equipment-dialog";
 
 interface Admin {
   username: string;
@@ -42,8 +43,6 @@ interface Admin {
 }
 
 function CompanyUpdate() {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAyOTIxNjkzLCJpYXQiOjE3MDI4MzUyOTMsImp0aSI6IjAyNzM3YTg4MzE1ZjRiODM4YzFmZGRmY2MxMmM5Yjg4IiwidXNlcl9pZCI6NCwiZW1haWwiOiJhbGVrc2FuZGFyLm1hcmlua292aWM2MzY2QGdtYWlsLmNvbSIsInJvbGUiOiJjb21wYW55X2FkbWluIn0.L-P2ODovhY8oT84JAGioDdaKUEYyfLngxdqWGaIUdmU";
   const { id } = useParams();
   const [company, setCompany] = useState({
     name: "",
@@ -78,6 +77,8 @@ function CompanyUpdate() {
   const [admins, setAdmins] = useState<Admin[]>([]);
   const [editMode, setEditMode] = useState(false);
 
+
+
   useEffect(() => {
     api
       .get(`http://127.0.0.1:8000/api/user/admins/${id}`)
@@ -103,6 +104,7 @@ function CompanyUpdate() {
     setEditMode(!editMode);
   };
 
+  
   useEffect(() => {
     if (!editMode) {
       setCompany(editedCompany);
@@ -271,7 +273,7 @@ function CompanyUpdate() {
               {/* Recent Orders */}
               <Grid item xs={12} md={5} lg={6}>
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  <h2>Equipment</h2>
+                  
                   <EquipmentAdmin companyId={Number(id)}></EquipmentAdmin>
                 </Paper>
               </Grid>
@@ -281,8 +283,7 @@ function CompanyUpdate() {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                  }}
-                >
+                  }}>
                   <h2>Company admins</h2>
                   <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 200 }} aria-label="simple table">

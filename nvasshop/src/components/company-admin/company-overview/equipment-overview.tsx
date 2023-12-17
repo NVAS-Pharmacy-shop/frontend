@@ -18,6 +18,7 @@ import {
 import { getEquipment } from "../../../service/https/equipment-service";
 import EditEquipmentDialog from "./edit-equipment-dialog";
 import { Equipment } from "../../../model/company";
+import AddEquipmentDialog from "./add-equipment-dialog";
 
 interface Company {
   id: number;
@@ -37,6 +38,7 @@ export interface EquipmentAdminProps {
 function EquipmentAdmin(props: EquipmentAdminProps) {
   const [companyEquipment, setCompanyEquipment] = useState<Equipment[]>([]);
   const [editDialogOpen, setEditDialogOpen] = useState<number | null>(null);
+  const [addEquipmentDialogOpen, setAddEquipmentDialogOpen] = useState(false);
 
   const fetchEquipmentData = async () => {
     try {
@@ -65,12 +67,19 @@ function EquipmentAdmin(props: EquipmentAdminProps) {
     if (editDialogOpen === null && props.companyId != undefined) {
       fetchEquipmentData();
     }
-  }, [editDialogOpen, props.companyId]);
-
+  }, [editDialogOpen, addEquipmentDialogOpen, props.companyId]);
 
   const handleEditSave = async (editedEquipment: Equipment) => {
     handleEditDialogClose();
   };
+
+  const handleAddEquipment = () => {
+    setAddEquipmentDialogOpen(true);
+  }
+  
+  const handleAddEquipmentDialogClose = () => {
+    setAddEquipmentDialogOpen(false);
+  }
 
   if (!companyEquipment) {
     return <div>Loading...</div>;
@@ -78,6 +87,17 @@ function EquipmentAdmin(props: EquipmentAdminProps) {
 
   return (
     <div>
+      <div className = "equipment-header">
+        <h2>Equipment</h2>
+        <Button
+          className="add-equipment"
+          type="button"
+          variant="contained"
+          color="primary"
+          onClick={handleAddEquipment}
+        >Add</Button>
+        <AddEquipmentDialog open={addEquipmentDialogOpen} onClose={handleAddEquipmentDialogClose}/>
+      </div>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 200, maxWidth: 500 }} aria-label="simple table">
           <TableHead>
@@ -103,16 +123,19 @@ function EquipmentAdmin(props: EquipmentAdminProps) {
                 <TableCell align="right">{row.description}</TableCell>
                 <TableCell align="right">{row.quantity}</TableCell>
                 <TableCell>
-                  {/* Button to open edit dialog */}
-                  <Button onClick={() => handleEditClick(index)}>Edit</Button>
+                  <Button onClick={() => handleEditClick(index)}
+                  variant="contained">Edit</Button>
                   {editDialogOpen === index && (
                     <EditEquipmentDialog
                       open={true}
                       onClose={handleEditDialogClose}
                       onSave={handleEditSave}
-                      equipment={row || { name: "", description: "", quantity: 0 }} // Pass default values if selectedEquipment is null
-                    />
-                  )}
+                      equipment={row || { name: "", description: "", quantity: 0 }}/>)}
+                </TableCell>
+                <TableCell>
+                  <Button variant="outlined" color="error">
+                    Remove
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
