@@ -70,7 +70,7 @@ function Company() {
                 <th>Name</th>
                 <th>Description</th>
                 <th>Quantity</th>
-                <th></th>
+                <th>Reseve</th>
               </tr>
             </thead>
             <tbody>
@@ -86,8 +86,7 @@ function Company() {
                         onClick={() => {
                           setReservedItems([...reservedItems, equipmentItem]);
                           setSelectedQuantities([...selectedQuantities, 1]);
-                        }}
-                      >
+                        }}>
                         Reserve
                       </button>
                     ) : (

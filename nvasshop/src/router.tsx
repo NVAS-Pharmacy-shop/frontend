@@ -14,7 +14,8 @@ import RegisterPage from "./pages/RegisterPage";
 import { AuthProvider } from "./context/AuthContext";
 import Header from "./components/Header";
 import HomePage from "./pages/HomePage";
-import AddPickupSchedule from "./components/company-admin/add-pickup-schedule";
+import AddPickupSchedule from "./components/company-admin/pickup-schedule/add-pickup-schedule";
+import EquipmentAdmin from "./components/company-admin/company-overview/equipment-overview";
 
 const AppRoutes = () => {
   return (

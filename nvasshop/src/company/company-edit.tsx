@@ -32,6 +32,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 import "./company-edit.css";
 import api from "../api";
+import EquipmentAdmin from "../components/company-admin/company-overview/equipment-overview";
 
 interface Admin {
   username: string;
@@ -42,7 +43,7 @@ interface Admin {
 
 function CompanyUpdate() {
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAwMDAyNDUwLCJpYXQiOjE2OTk5MTYwNTAsImp0aSI6IjIyMDNkZjc5ZGRhMDRjNDQ5MmU2ZjZlZmE3MTU1MWY0IiwidXNlcl9pZCI6NCwiZW1haWwiOiJ1c2VyM0B0ZXN0LmNvbSIsInJvbGUiOiJjb21wYW55X2FkbWluIn0.udxREJ36WmsxSVbtw77nw8RQvn8TO1uZAybM_tdCHQ4";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAyOTIxNjkzLCJpYXQiOjE3MDI4MzUyOTMsImp0aSI6IjAyNzM3YTg4MzE1ZjRiODM4YzFmZGRmY2MxMmM5Yjg4IiwidXNlcl9pZCI6NCwiZW1haWwiOiJhbGVrc2FuZGFyLm1hcmlua292aWM2MzY2QGdtYWlsLmNvbSIsInJvbGUiOiJjb21wYW55X2FkbWluIn0.L-P2ODovhY8oT84JAGioDdaKUEYyfLngxdqWGaIUdmU";
   const { id } = useParams();
   const [company, setCompany] = useState({
     name: "",
@@ -271,38 +272,7 @@ function CompanyUpdate() {
               <Grid item xs={12} md={5} lg={6}>
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
                   <h2>Equipment</h2>
-                  <TableContainer component={Paper}>
-                    <Table
-                      sx={{ minWidth: 200, maxWidth: 500 }}
-                      aria-label="simple table"
-                    >
-                      <TableHead>
-                        <TableRow>
-                          <TableCell>Name</TableCell>
-                          <TableCell align="right">Description</TableCell>
-                          <TableCell align="right">Quantity</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {editedCompany?.equipment.map((row) => (
-                          <TableRow
-                            key={row.name}
-                            sx={{
-                              "&:last-child td, &:last-child th": { border: 0 },
-                            }}
-                          >
-                            <TableCell component="th" scope="row">
-                              {row.name}
-                            </TableCell>
-                            <TableCell align="right">
-                              {row.description}
-                            </TableCell>
-                            <TableCell align="right">{row.quantity}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
+                  <EquipmentAdmin companyId={Number(id)}></EquipmentAdmin>
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4} lg={6}>

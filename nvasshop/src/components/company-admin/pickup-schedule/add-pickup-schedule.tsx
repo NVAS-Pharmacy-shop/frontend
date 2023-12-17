@@ -5,8 +5,8 @@ import dayjs from "dayjs";
 import { Button, Slider, TextField } from "@mui/material";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import "./add-pickup-schedule.css";
-import { createPickupSchedule } from "../../service/https/pickup-schedule-service";
-import { PickupSchedule } from "../../model/company";
+import { createPickupSchedule } from "../../../service/https/pickup-schedule-service";
+import { PickupSchedule } from "../../../model/company";
 
 const AddPickupSchedule = () => {
     const[formData, setFormData] = useState({
@@ -66,8 +66,8 @@ const AddPickupSchedule = () => {
         <div className="form-container">
             <form className="form-class" onSubmit={handleSubmit}>
                 <TextField name="administrator_firstName" label="First name" 
-                variant="standard" value={formData.administrator_firstName} onChange={handleChange}/>
-                <TextField name="administrator_lastName" label="Last name" 
+                variant="standard" value={formData.administrator_firstName} onChange={handleChange} required />
+                <TextField name="administrator_lastName" label="Last name"  required
                 variant="standard" value={formData.administrator_lastName} onChange={handleChange}/>
 
                 <div className = "pickeri">
