@@ -173,7 +173,6 @@ function CompanyUpdate() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
                   sx={{
@@ -238,7 +237,6 @@ function CompanyUpdate() {
                   </div>
                 </Paper>
               </Grid>
-              {/* Recent Deposits */}
               <Grid item xs={12} md={4} lg={3}>
                 <Paper
                   sx={{
@@ -271,14 +269,12 @@ function CompanyUpdate() {
                   <p>{editedCompany?.rate || ""}</p>
                 </Paper>
               </Grid>
-              {/* Recent Orders */}
-              <Grid item xs={12} md={5} lg={6}>
+              <Grid item xs={12} md={7} lg={6.5}>
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  
                   <EquipmentAdmin companyId={Number(id)}></EquipmentAdmin>
                 </Paper>
               </Grid>
-              <Grid item xs={12} md={4} lg={6}>
+              <Grid item xs={12} md={5} lg={5.5}>
                 <Paper
                   sx={{
                     p: 2,

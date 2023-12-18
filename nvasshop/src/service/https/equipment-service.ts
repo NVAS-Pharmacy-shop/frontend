@@ -38,7 +38,20 @@ export const addEquipment = async(equipment : Equipment) : Promise<void> => {
             },
         });
     }catch(error) {
-        console.error('Error updating equipment ', error);
+        console.error('Error adding equipment ', error);
+        throw error;
+    }
+}
+
+export const deleteEquipment = async(id : number) : Promise<void> => {
+    try{
+        const response = await api.delete(`/company/equipment/admin/${id}`, {
+            headers: {
+                'Content-Type' : 'application/json',
+            },
+        });
+    }catch(error) {
+        console.error('Error deleting equipment ', error);
         throw error;
     }
 }

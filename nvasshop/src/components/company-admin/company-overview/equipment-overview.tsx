@@ -16,21 +16,10 @@ import {
   TableRow,
   TextField,
 } from "@mui/material";
-import { getEquipment } from "../../../service/https/equipment-service";
+import { deleteEquipment, getEquipment } from "../../../service/https/equipment-service";
 import EditEquipmentDialog from "./edit-equipment-dialog";
 import { Equipment } from "../../../model/company";
 import AddEquipmentDialog from "./add-equipment-dialog";
-
-interface Company {
-  id: number;
-  name: string;
-  address: string;
-  description: string;
-  email: string;
-  website: string;
-  rate: number;
-  equipment: Equipment[];
-}
 
 export interface EquipmentAdminProps {
   companyId: number;
@@ -97,6 +86,15 @@ function EquipmentAdmin(props: EquipmentAdminProps) {
     setSearchQuery(e.target.value);
   };
 
+  const handleRemoveEquipment = async (id : number) => {
+    try{
+      await deleteEquipment(id);
+      fetchEquipmentData();
+    }catch (error) {
+      console.error("Error deleting equipment ", error);
+    }
+  }
+
   if (!companyEquipment) {
     return <div>Loading...</div>;
   }
@@ -158,7 +156,16 @@ function EquipmentAdmin(props: EquipmentAdminProps) {
                       equipment={row || { name: "", description: "", quantity: 0 }}/>)}
                 </TableCell>
                 <TableCell>
-                  <Button variant="outlined" color="error">
+                  <Button 
+                    variant="outlined" 
+                    color="error"
+                    onClick={() => {
+                        const shouldDelete = window.confirm("Are you sure you want to remove this equipment?");
+
+                        if (shouldDelete) {
+                            handleRemoveEquipment(row.id);
+                        }
+                    }}>
                     Remove
                   </Button>
                 </TableCell>
