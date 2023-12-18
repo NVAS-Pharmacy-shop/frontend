@@ -2,9 +2,9 @@ import api from "../../api";
 import { Equipment } from "../../model/company";
 
 
-export const getEquipment = async(id: number): Promise<Equipment[]> => {
+export const getEquipment = async(): Promise<Equipment[]> => {
     try{
-        const response = await api.get(`/company/${id}`, {
+        const response = await api.get(`/company/`, {
             headers: {
                 'Content-Type' : 'application/json',
             },

@@ -45,7 +45,7 @@ function EquipmentAdmin(props: EquipmentAdminProps) {
 
   const fetchEquipmentData = async () => {
     try {
-      const equipmentData = await getEquipment(props.companyId);
+      const equipmentData = await getEquipment();
       setCompanyEquipment(equipmentData);
       setCompanyEquipmentAll(equipmentData);
 

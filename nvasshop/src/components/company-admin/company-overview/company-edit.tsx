@@ -26,14 +26,13 @@ import {
   TableCell,
   TableBody,
 } from "@mui/material";
-import NotificationsIcon, { Copyright } from "@mui/icons-material";
+import { Copyright } from "@mui/icons-material";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 import "./company-edit.css";
 import api from "../../../api";
 import EquipmentAdmin from "./equipment-overview";
-import AddEquipmentDialog from "./add-equipment-dialog";
 
 interface Admin {
   username: string;
@@ -45,6 +44,7 @@ interface Admin {
 function CompanyUpdate() {
   const { id } = useParams();
   const [company, setCompany] = useState({
+    id: -1,
     name: "",
     address: "",
     description: "",
@@ -60,6 +60,7 @@ function CompanyUpdate() {
     ],
   });
   const [editedCompany, setEditedCompany] = useState({
+    id: -1,
     name: "",
     address: "",
     description: "",
@@ -81,7 +82,7 @@ function CompanyUpdate() {
 
   useEffect(() => {
     api
-      .get(`http://127.0.0.1:8000/api/user/admins/${id}`)
+      .get(`http://127.0.0.1:8000/api/user/admins/companies/`)
       .then((response) => {
         setAdmins(response.data.user);
       })
@@ -89,7 +90,7 @@ function CompanyUpdate() {
         console.error("Error fetching admins", error);
       });
     api
-      .get(`http://127.0.0.1:8000/api/company/${id}`)
+      .get(`http://127.0.0.1:8000/api/company/`)
       .then((response) => {
         setCompany(response.data.company);
         setEditedCompany(response.data.company);
@@ -113,7 +114,7 @@ function CompanyUpdate() {
 
   const handleSaveClick = () => {
     api
-      .put(`http://127.0.0.1:8000/api/company/${id}`, editedCompany)
+      .put(`http://127.0.0.1:8000/api/company/${company.id}/`, editedCompany)
       .then((response) => {
         const updatedCompany = response.data;
         setEditedCompany(updatedCompany);

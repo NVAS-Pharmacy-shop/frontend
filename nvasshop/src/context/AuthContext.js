@@ -72,7 +72,12 @@ export const AuthProvider = ({ children }) => {
       console.log(data.refresh);
       setUser(jwtDecode(data.access));
       localStorage.setItem("authTokens", JSON.stringify(data));
-      navigate("/");
+      const u = jwtDecode(data.access);
+      if(u.first_login && u.role==='company_admin'){
+        navigate("/admin/change-password/");
+      }else{
+        navigate("/");  
+      }
     } else {
       alert("Something went wrong!");
     }

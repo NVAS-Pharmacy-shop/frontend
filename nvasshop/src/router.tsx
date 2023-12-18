@@ -14,8 +14,9 @@ import RegisterPage from "./pages/RegisterPage";
 import { AuthProvider } from "./context/AuthContext";
 import Header from "./components/Header";
 import HomePage from "./pages/HomePage";
-import AddPickupSchedule from "./components/company-admin/pickup-schedule/add-pickup-schedule";
+import AddPickupSchedule from "./components/company-admin/pickup-schedule/add-schedule/add-pickup-schedule";
 import EquipmentAdmin from "./components/company-admin/company-overview/equipment-overview";
+import ChangeCompanyAdminPassword from "./components/company-admin/change-password/ChangePasswordPage";
 
 const AppRoutes = () => {
   return (
@@ -25,8 +26,9 @@ const AppRoutes = () => {
         <Routes>
           <Route element={<PrivateRoutes />}>
             <Route path="/company/:id" element={<Company />}></Route>
+            
             <Route
-              path="/updateCompany/:id"
+              path="/admin/company-overview/"
               element={<CompanyUpdate />}
             ></Route>
             <Route
@@ -50,6 +52,7 @@ const AppRoutes = () => {
             <Route path="/add-pickup-schedule/" element={<AddPickupSchedule />}></Route>
           </Route>
           <Route path="/" element={<HomePage />}></Route>
+          <Route path="/admin/change-password/" element={<ChangeCompanyAdminPassword />}></Route>
           <Route element={<LoginPage />} path="/login" />
           <Route element={<RegisterPage />} path="/register" />
         </Routes>

@@ -5,8 +5,8 @@ import dayjs from "dayjs";
 import { Button, Slider, TextField } from "@mui/material";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import "./add-pickup-schedule.css";
-import { createPickupSchedule } from "../../../service/https/pickup-schedule-service";
-import { PickupSchedule } from "../../../model/company";
+import { createPickupSchedule } from "../../../../service/https/pickup-schedule-service";
+import { PickupSchedule } from "../../../../model/company";
 
 const AddPickupSchedule = () => {
     const[formData, setFormData] = useState({
