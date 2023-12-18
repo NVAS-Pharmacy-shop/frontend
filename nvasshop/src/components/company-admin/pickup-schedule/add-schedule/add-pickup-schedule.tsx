@@ -7,6 +7,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import "./add-pickup-schedule.css";
 import { createPickupSchedule } from "../../../../service/https/pickup-schedule-service";
 import { PickupSchedule } from "../../../../model/company";
+import { useNavigate } from "react-router-dom";
 
 const AddPickupSchedule = () => {
     const[formData, setFormData] = useState({
@@ -16,6 +17,7 @@ const AddPickupSchedule = () => {
         start_time: dayjs(),
         duration_minutes: 0
     });
+    const navigate = useNavigate();
     
     const handleChange = (e: { target: { name: any; value: any; }; }) => {
         const {name, value} = e.target;
@@ -54,6 +56,7 @@ const AddPickupSchedule = () => {
                 duration_minutes: formData.duration_minutes,
             };
             await createPickupSchedule(pickupScheduleData);
+            navigate("/admin/work-calendar/")
         } catch (error) {
         }
     };
@@ -64,14 +67,17 @@ const AddPickupSchedule = () => {
     return(
         <div className="form-container">
             <form className="form-class" onSubmit={handleSubmit}>
-                <TextField name="administrator_firstName" label="First name" 
+                <TextField name="administrator_firstName" label="First name" className="add-schedule-input"
                 variant="standard" value={formData.administrator_firstName} onChange={handleChange} required />
-                <TextField name="administrator_lastName" label="Last name"  required
+                <TextField name="administrator_lastName" label="Last name"  required className="add-schedule-input"
                 variant="standard" value={formData.administrator_lastName} onChange={handleChange}/>
 
                 <div className = "pickeri">
                     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="'en-us'">
-                        <StaticDatePicker defaultValue={dayjs()} onChange={handleDateChange}/>
+                        <StaticDatePicker 
+                        defaultValue={dayjs()} 
+                        onChange={handleDateChange}
+                        disablePast/>
                     </LocalizationProvider>
                     
                     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="'en-us'">
@@ -80,7 +86,16 @@ const AddPickupSchedule = () => {
                 </div>
                 
                 Duration:
-                <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" value={formData.duration_minutes} onChange={handleSliderChange}/>
+                <Slider
+                defaultValue={50} 
+                aria-label="Default" 
+                valueLabelDisplay="auto" 
+                value={formData.duration_minutes} 
+                onChange={handleSliderChange}
+                className="duration-slider"
+                max={200}
+                min={5}
+                step={5}/>
             
                 <Button variant="contained" type="submit">Submit</Button>
             </form>

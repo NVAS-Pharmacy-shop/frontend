@@ -2,7 +2,7 @@ import api from "../../api";
 import { PickupSchedule } from "../../model/company";
 
 
-const createPickupSchedule = async (
+export const createPickupSchedule = async (
     pickupScheduleData: PickupSchedule
 ) : Promise<void> => {
     try 
@@ -20,4 +20,17 @@ const createPickupSchedule = async (
     }
 }
 
-export { createPickupSchedule };
+export const getSchedules = async(): Promise<PickupSchedule[]> => {
+    try{
+        const response = await api.get(`/company/schedules/`, {
+            headers : {
+                'Content-Type' : 'application/json',
+            },
+        });
+        console.log(response.data);
+        return response.data.schedules;
+    }catch(error){
+        console.error('Error getting schedules: ', error);
+        throw error;
+    }
+} 

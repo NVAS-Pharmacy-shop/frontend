@@ -1,22 +1,21 @@
-form {
+.form-class {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: fit-content;
-    margin: auto;
   }
   
   label {
     margin-bottom: 10px;
   }
   
-  .MuiTextField-root {
+  .form-class .add-schedule-input{
     width: 40%;
     margin-top: 20px;
   }
   
-  .MuiSlider-root {
+  .form-class .duration-slider {
     margin-top: 10px;
     width: 40%;
   } 
@@ -32,8 +31,5 @@ form {
   {
     display: flex;
     flex-direction: column;
-  }
-  .form-class
-  {
-    
+    align-items: center;
   }
