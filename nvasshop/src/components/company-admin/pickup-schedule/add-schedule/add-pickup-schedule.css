@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: fit-content;
+    width: 60%;
   }
   
   label {
@@ -11,21 +11,20 @@
   }
   
   .form-class .add-schedule-input{
-    width: 40%;
+    width: 80%;
     margin-top: 20px;
   }
   
   .form-class .duration-slider {
     margin-top: 10px;
-    width: 40%;
+    width: 80%;
   } 
   .pickeri
   {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 50rem;
+    flex-direction: column;
     margin-top: 20px;
+    width: 80%;
   }
   .form-container
   {

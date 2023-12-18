@@ -48,12 +48,9 @@ const WorkCalendar = () => {
                 value={selectedDate}
                 tileContent={({ date }) => {
                 const dateSchedules = schedules.filter((term) => {
-                    // Check if term.date is not undefined or null
                     if (term.date !== undefined && term.date !== null) {
-                      // Convert both dates to strings for comparison
                       return new Date(term.date).toDateString() === date.toDateString();
                     }
-                    // Handle the case where term.date is undefined or null
                     return false;
                   });
                 return dateSchedules.map((term) => (

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
+import { LocalizationProvider, StaticDatePicker, TimePicker, renderTimeViewClock } from "@mui/x-date-pickers";
 import { DatePicker, StaticTimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { Button, Slider, TextField } from "@mui/material";
@@ -35,6 +35,7 @@ const AddPickupSchedule = () => {
     };
 
     const handleTimeChange = (time : any) => {
+        time.set("second", 0);
         handleSpecialChange("start_time", time);
     };
 
@@ -52,7 +53,7 @@ const AddPickupSchedule = () => {
                 administrator_firstName: formData.administrator_firstName,
                 administrator_lastName: formData.administrator_lastName,
                 date: formData.date ? (formData.date as dayjs.Dayjs).format('YYYY-MM-DD') : null,
-                start_time: formData.start_time ? formData.start_time.format('HH:mm:ss') : '',
+                start_time: formData.start_time ? formData.start_time.format('HH:mm') : '',
                 duration_minutes: formData.duration_minutes,
             };
             await createPickupSchedule(pickupScheduleData);
@@ -74,14 +75,22 @@ const AddPickupSchedule = () => {
 
                 <div className = "pickeri">
                     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="'en-us'">
-                        <StaticDatePicker 
+                        <DatePicker 
                         defaultValue={dayjs()} 
                         onChange={handleDateChange}
                         disablePast/>
                     </LocalizationProvider>
                     
                     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="'en-us'">
-                        <StaticTimePicker defaultValue={dayjs()} value={formData.start_time} onChange={handleTimeChange}/>
+                        <TimePicker 
+                        defaultValue={dayjs()} 
+                        value={formData.start_time} 
+                        onChange={handleTimeChange}
+                        viewRenderers={{
+                            hours: renderTimeViewClock,
+                            minutes: renderTimeViewClock
+                        }}
+                        />
                     </LocalizationProvider>
                 </div>
                 
