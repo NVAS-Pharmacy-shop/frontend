@@ -7,6 +7,7 @@ import EquipmentBrowser from "./equipment/equipment-browser";
 import EditCompanyAdminProfile from "./user/company-admin-profile-update";
 import RegisterCompany from "./admin/register-company";
 import RegisterCompanyAdmin from "./admin/register-company-admin";
+import RegisterSytemAdmin from "./admin/register-system-admin";
 import CompaniesOverview from "./company/companies-overview";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import LoginPage from "./pages/LoginPage";
@@ -37,20 +38,12 @@ const AppRoutes = () => {
               element={<EditCompanyAdminProfile />}
             ></Route>
             <Route path="/equipment" element={<EquipmentBrowser />}></Route>
-            <Route
-              path="/equipment/:companyId"
-              element={<EquipmentBrowser />}
-            ></Route>
-            <Route
-              path="/registerCompany/"
-              element={<RegisterCompany />}
-            ></Route>
-            <Route
-              path="/registerCompanyAdmin/"
-              element={<RegisterCompanyAdmin />}
-            ></Route>
+            <Route path="/equipment/:companyId" element={<EquipmentBrowser />}></Route>
+            <Route path="/registerCompany/" element={<RegisterCompany />}></Route>
+            <Route path="/registerCompanyAdmin/" element={<RegisterCompanyAdmin />}></Route>
             <Route path="/companies" element={<CompaniesOverview />}></Route>
             <Route path="/add-pickup-schedule/" element={<AddPickupSchedule />}></Route>
+            <Route path="/registerSystemAdmin/" element={<RegisterSytemAdmin />}></Route>
           </Route>
           <Route path="/" element={<HomePage />}></Route>
           <Route path="/admin/change-password/" element={<ChangeCompanyAdminPassword />}></Route>

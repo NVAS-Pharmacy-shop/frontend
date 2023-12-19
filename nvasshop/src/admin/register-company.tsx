@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './register-company.css';
+import './register-form.css';
 import axios from 'axios';
 
 const RegisterCompany = () => {
