@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './register-form.css';
 import axios from 'axios';
+import api from '../api';
 
 interface Company {
     id: number;
@@ -45,7 +46,11 @@ const RegisterCompanyAdmin: React.FC = () => {
             company: selectedCompany,
         };
     
-        axios.post('http://127.0.0.1:8000/api/auth/registerCompanyAdmin/', formData)
+        api.post('/auth/registerSompanyAdmin/', formData, {
+            headers: {
+                'Content-Type': 'application/json',
+              },
+        })
         .then(response => {
             alert('Company admin registered successfully!')
             console.log('Company admin registered successfully:', response.data);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './register-form.css';
 import axios from 'axios';
+import api from '../api';
 
 const RegisterSystemAdmin: React.FC = () => {
     const [firstName, setFirstName] = useState('');
@@ -25,7 +26,11 @@ const RegisterSystemAdmin: React.FC = () => {
             password,
         };
     
-        axios.post('http://127.0.0.1:8000/api/auth/registerSystemAdmin/', formData)
+        api.post('/auth/registerSystemAdmin/', formData, {
+            headers: {
+                'Content-Type': 'application/json',
+              },
+        })
         .then(response => {
             alert('System admin registered successfully!')
             console.log('System admin registered successfully:', response.data);
