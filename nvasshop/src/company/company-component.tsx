@@ -1,23 +1,38 @@
-import React, { Component, useState, useEffect, SyntheticEvent, useContext } from "react";
+import React, {
+  Component,
+  useState,
+  useEffect,
+  SyntheticEvent,
+  useContext,
+} from "react";
 import { useParams } from "react-router-dom";
 import "./company-overview.css";
 import api from "../api";
 import { Equipment, PickupSchedule } from "../model/company";
-import { Box, Button, Grid, Paper, Slider, Tab, Tabs, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  Paper,
+  Slider,
+  Tab,
+  Tabs,
+  Typography,
+} from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import {
   DateTimePicker,
   LocalizationProvider,
   renderTimeViewClock,
 } from "@mui/x-date-pickers";
-import { getSchedules } from "../service/https/pickup-schedule-service";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 import AuthContext from "../context/AuthContext";
+import { Dropdown } from "react-bootstrap";
 
 interface Company {
   id: number;
@@ -59,7 +74,7 @@ function CustomTabPanel(props: TabPanelProps) {
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
@@ -73,29 +88,70 @@ function Company() {
   const [date, setDate] = useState<Date | null>(null);
   const [schedules, setSchedules] = useState<PickupSchedule[]>([]);
   const [value, setValue] = useState(0);
-
+  const [isManual, setIsManual] = useState<boolean>(false);
+  const [selectedPickupSchedule, setSelectedPickupSchedule] =
+    useState<number>(-1);
+  const [isSelected, setIsSelected] = useState<boolean>(false);
   const handleTabChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
-  const fetchSchedules = async () => {
-    try {
-      const schedules = await getSchedules();
-      setSchedules(schedules);
-    } catch (error) {
-      console.log('Error fetching equipment data.', error);
+  // const fetchSchedules = async () => {
+  //   try {
+  //     const schedules = await getSchedules();
+  //     setSchedules(schedules);
+  //   } catch (error) {
+  //     console.log('Error fetching equipment data.', error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchSchedules();
+  // }, []);
+
+  const reserve = () => {
+    {
+      let equipments = reservedItems.map((equipmentItem, index) => {
+        return {
+          equipment_id: equipmentItem.id,
+          quantity: selectedQuantities[index],
+        };
+      });
+
+      let reserveItem = {};
+      if (isManual) {
+        reserveItem = {
+          company_id: company!.id,
+          equipments: equipments,
+          date: date,
+        };
+      } else {
+        reserveItem = {
+          company_id: company!.id,
+          equipments: equipments,
+          pickup_schedule_id: selectedPickupSchedule,
+        };
+      }
+
+      api
+        .post(`/company/reserve/`, reserveItem)
+        .then((response) => {
+          console.log(response);
+        })
+        .then(() => {
+          setReservedItems([]);
+          setSelectedQuantities([]);
+          setReserveCount(reserveCount + 1);
+        });
     }
   };
-
-  useEffect(() => {
-    fetchSchedules();
-  }, []);
 
   useEffect(() => {
     api
       .get(`/company/${id}`)
       .then((response) => {
         setCompany(response.data.company);
+        setSchedules(response.data.company.filtered_pickup_schedules);
       })
       .catch((error) => {
         console.error("Error fetching company", error);
@@ -120,12 +176,16 @@ function Company() {
           <p>
             <strong>Description:</strong> {company.description}
           </p>
-          
-          <Box sx={{ width: '100%' }}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs value={value} onChange={handleTabChange} aria-label="basic tabs example">
-                <Tab label="Equipment" {...a11yProps(0)}/>
-                <Tab label="Pickup Schedules" {...a11yProps(1)}/>
+
+          <Box sx={{ width: "100%" }}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <Tabs
+                value={value}
+                onChange={handleTabChange}
+                aria-label="basic tabs example"
+              >
+                <Tab label="Equipment" {...a11yProps(0)} />
+                <Tab label="Pickup Schedules" {...a11yProps(1)} />
               </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
@@ -151,9 +211,16 @@ function Company() {
                             <button
                               className="btn btn-primary"
                               onClick={() => {
-                                setReservedItems([...reservedItems, equipmentItem]);
-                                setSelectedQuantities([...selectedQuantities, 1]);
-                              }}>
+                                setReservedItems([
+                                  ...reservedItems,
+                                  equipmentItem,
+                                ]);
+                                setSelectedQuantities([
+                                  ...selectedQuantities,
+                                  1,
+                                ]);
+                              }}
+                            >
                               Add
                             </button>
                           ) : (
@@ -166,7 +233,7 @@ function Company() {
                 </table>
               </div>
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
+            {/* <CustomTabPanel value={value} index={1}>
               <div>
                 <TableContainer component={Paper}>
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -190,7 +257,7 @@ function Company() {
                           </TableCell>
                           <TableCell align="right">{row.start_time}</TableCell>
                           <TableCell align="right">{row.duration_minutes}</TableCell>
-                          <TableCell align="right">{row.administrator_firstName} {row.administrator_lastName}</TableCell>
+                          <TableCell align="right">{row.company_admin.first_name} {row.company_admin.last_name}</TableCell>
                           <TableCell align="right">
                             <Button 
                             variant="contained"
@@ -202,7 +269,7 @@ function Company() {
                   </Table>
                 </TableContainer>
               </div>            
-            </CustomTabPanel>
+            </CustomTabPanel> */}
           </Box>
           <div className="average-rating">
             <p>
@@ -265,46 +332,64 @@ function Company() {
               </tbody>
             </table>
             <Grid container direction="column" alignItems={"start"}>
-              <DateTimePicker
-                sx={{ width: "300px", margin: "10px" }}
-                label="With Time Clock"
-                value={date}
-                onChange={(newValue) => {
-                  setDate(newValue);
-                }}
-                viewRenderers={{
-                  hours: renderTimeViewClock,
-                  minutes: renderTimeViewClock,
-                  seconds: renderTimeViewClock,
-                }}
-              />
+              <Grid container direction="row" alignItems={"center"}>
+                <>
+                  {isManual && (
+                    <DateTimePicker
+                      sx={{ width: "300px", margin: "10px" }}
+                      label="With Time Clock"
+                      value={date}
+                      onChange={(newValue) => {
+                        setDate(newValue);
+                        setIsSelected(true);
+                      }}
+                      viewRenderers={{
+                        hours: renderTimeViewClock,
+                        minutes: renderTimeViewClock,
+                        seconds: renderTimeViewClock,
+                      }}
+                    />
+                  )}
+                </>
+                {!isManual && (
+                  <Dropdown>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                      Select Date
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      {schedules.map((row) => (
+                        <Dropdown.Item
+                          key={row.date}
+                          onClick={() => {
+                            setSelectedPickupSchedule(row.id);
+                            setIsSelected(true);
+                          }}
+                        >
+                          {row.date}
+                          {" | "} {row.start_time.slice(0, 8)}
+                          {" | "}
+                          {row.duration_minutes}
+                          {" | "} {row.company_admin.first_name}
+                          {" | "}
+                          {row.company_admin.last_name}
+                        </Dropdown.Item>
+                      ))}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                )}
+                <Button
+                  onClick={() => setIsManual(!isManual)}
+                  variant="contained"
+                >
+                  {isManual ? "Select from calendar" : "Select manually"}
+                </Button>
+              </Grid>
               <Button
                 sx={{ width: "100px", margin: "10px" }}
                 variant="contained"
-                onClick={() => {
-                  let equipments = reservedItems.map((equipmentItem, index) => {
-                    return {
-                      equipment_id: equipmentItem.id,
-                      quantity: selectedQuantities[index],
-                    };
-                  });
-                  let reserveItem = {
-                    company_id: company.id,
-                    equipments: equipments,
-                    date: date,
-                  };
-
-                  api
-                    .post(`/company/reserve/`, reserveItem)
-                    .then((response) => {
-                      console.log(response);
-                    })
-                    .then(() => {
-                      setReservedItems([]);
-                      setSelectedQuantities([]);
-                      setReserveCount(reserveCount + 1);
-                    });
-                }}
+                onClick={reserve}
+                disabled={!isSelected}
               >
                 Reserve
               </Button>

@@ -1,9 +1,9 @@
 import api from "../../api";
-import { PickupSchedule } from "../../model/company";
+import { PickupSchedule, PickupScheduleInput } from "../../model/company";
 
 
 export const createPickupSchedule = async (
-    pickupScheduleData: PickupSchedule
+    pickupScheduleData: PickupScheduleInput
 ) : Promise<void> => {
     try 
     {
