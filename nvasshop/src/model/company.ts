@@ -23,9 +23,23 @@ export interface Equipment {
 export interface PickupSchedule {
     id: number,
     company: number,
-    administrator_firstName: string,
-    administrator_lastName: string,
     date?: string | null;
     start_time: string,
-    duration_minutes: number
+    duration_minutes: string,
+    company_admin: CompanyAdmin,
+}
+
+export interface PickupScheduleInput {
+    date?: string | null;
+    start_time: string,
+    duration_minutes: number,
+    first_name: string,
+    last_name: string,
+}
+
+export interface CompanyAdmin {
+    id: number,
+    email: string,
+    first_name: string,
+    last_name: string,
 }

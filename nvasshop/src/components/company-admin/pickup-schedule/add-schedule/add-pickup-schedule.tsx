@@ -6,7 +6,7 @@ import { Button, Slider, TextField } from "@mui/material";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import "./add-pickup-schedule.css";
 import { createPickupSchedule } from "../../../../service/https/pickup-schedule-service";
-import { PickupSchedule } from "../../../../model/company";
+import { PickupSchedule, PickupScheduleInput } from "../../../../model/company";
 import { useNavigate } from "react-router-dom";
 
 const AddPickupSchedule = () => {
@@ -47,14 +47,12 @@ const AddPickupSchedule = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const pickupScheduleData: PickupSchedule = {
-                id: 0, 
-                company: 0, 
-                administrator_firstName: formData.administrator_firstName,
-                administrator_lastName: formData.administrator_lastName,
+            const pickupScheduleData: PickupScheduleInput = {
                 date: formData.date ? (formData.date as dayjs.Dayjs).format('YYYY-MM-DD') : null,
                 start_time: formData.start_time ? formData.start_time.format('HH:mm') : '',
                 duration_minutes: formData.duration_minutes,
+                first_name: formData.administrator_firstName,
+                last_name: formData.administrator_lastName
             };
             await createPickupSchedule(pickupScheduleData);
             navigate("/admin/work-calendar/")

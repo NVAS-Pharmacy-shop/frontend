@@ -26,9 +26,13 @@ const WorkCalendar = () => {
     fetchSchedules();
   }, []);
 
-  const calculateEndTime = (time : string, duration: number) : string => {
+  const calculateEndTime = (time : string, duration: string) : string => {
     const dateTime = dayjs(`2000-01-01 ${time}`);
-    const endTime = dateTime.add(duration, 'minutes');
+    // const endTime = dateTime.add(duration);
+    let hh = duration.split(":")[0];
+    let mm = duration.split(":")[1];
+    let ss = duration.split(":")[2];
+    const endTime = dateTime.add(parseInt(hh), 'hour').add(parseInt(mm), 'minute').add(parseInt(ss), 'second');
     const timeOnly = endTime.format('HH:mm:ss');
     return timeOnly;
   }
@@ -55,9 +59,8 @@ const WorkCalendar = () => {
                   });
                 return dateSchedules.map((term) => (
                   <div key={term.id}>
-                    <Typography variant="body2">{term.start_time} - {calculateEndTime(term.start_time, term.duration_minutes)}</Typography>
-                    <Typography variant="body2">
-                        In charge: {term.administrator_firstName} {term.administrator_lastName}
+                    <Typography variant="body2">{term.start_time.slice(0,8)} - {calculateEndTime(term.start_time, term.duration_minutes)}</Typography>
+                    <Typography variant="body2">{term.company_admin.first_name} {term.company_admin.last_name}
                     </Typography>
                   </div>
                 ));
