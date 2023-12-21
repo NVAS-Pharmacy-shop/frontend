@@ -19,6 +19,7 @@ import AddPickupSchedule from "./components/company-admin/pickup-schedule/add-sc
 import EquipmentAdmin from "./components/company-admin/company-overview/equipment-overview";
 import ChangeCompanyAdminPassword from "./components/company-admin/change-password/ChangePasswordPage";
 import WorkCalendar from "./components/company-admin/pickup-schedule/work-calendar/work-calendar";
+import CompanyCalendar from "./company/company-calendar";
 
 const AppRoutes = () => {
   return (
@@ -50,6 +51,7 @@ const AppRoutes = () => {
           <Route element={<LoginPage />} path="/login" />
           <Route element={<RegisterPage />} path="/register" />
           <Route element={<WorkCalendar />} path="/admin/work-calendar/" />
+          <Route element={<CompanyCalendar />} path="/company/work-calendar/" />
         </Routes>
       </AuthProvider>
     </Router>
