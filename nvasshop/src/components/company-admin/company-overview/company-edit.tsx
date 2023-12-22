@@ -131,15 +131,16 @@ function CompanyUpdate() {
         console.error("Error fetching admins", error);
       });
     api
-      .get(`http://127.0.0.1:8000/api/company/`)
+      .get(`http://127.0.0.1:8000/api/company/admin/`)
       .then((response) => {
+        console.log(response.data);
         setCompany(response.data.company);
         setEditedCompany(response.data.company);
       })
       .catch((error) => {
         console.error("Error fetching company", error);
       });
-  }, [id]);
+  },[]);
 
   const handleEditClick = () => {
     setEditedCompany(company);
