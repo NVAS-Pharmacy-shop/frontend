@@ -3,7 +3,7 @@ import api from '../../api';
 export interface Reservation {
     date?: string | null;
     start_time: string;
-    duration_minutes: number;
+    end_time: string;
     user_first_name: string;
     user_last_name: string;
 }
@@ -15,16 +15,15 @@ const getReservations = async(date: string, dateWindow: string): Promise<Reserva
                 'Content-Type' : 'application/json',
             },
         });
-        console.log(response.data);
+        //console.log(response.data);
 
-        // Map backend data to Reservation interface
         const reservations: Reservation[] = response.data.reservations.map((reservation: any) => {
-            const [hours, minutes] = reservation.start_time.split(':'); // Split start_time by ':'
-            const [duration_hours, duration_minutes] = reservation.duration_minutes.split(':'); // Split duration_minutes by ':'
+            const [shours, sminutes] = reservation.start_time.split(':');
+            const [ehours, eminutes] = reservation.end_time.split(':');
             return {
                 date: reservation.date,
-                start_time: `${hours}:${minutes}`, // Format start_time as 'HH:MM'
-                duration_minutes: parseInt(duration_hours) * 60 + parseInt(duration_minutes), // Convert duration_hours to minutes and add duration_minutes
+                start_time: `${shours}:${sminutes}`,
+                end_time: `${ehours}:${eminutes}`,
                 user_first_name: reservation.user_first_name,
                 user_last_name: reservation.user_last_name,
             };
