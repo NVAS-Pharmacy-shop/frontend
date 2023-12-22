@@ -1,40 +1,42 @@
-import dayjs from 'dayjs';
+import api from '../../api';
 
 export interface Reservation {
     date?: string | null;
     start_time: string;
     duration_minutes: number;
-    employeeName: string;
-    employeeSurname: string;
+    user_first_name: string;
+    user_last_name: string;
 }
 
-const generateReservations = (): Reservation[] => {
-    const currentDate = new Date();
-    const reservationList: Reservation[] = [];
+const getReservations = async(date: string, dateWindow: string): Promise<Reservation[]> => {
+    try{
+        const response = await api.get(`/company/reservations/${date}/${dateWindow}/`, {
+            headers : {
+                'Content-Type' : 'application/json',
+            },
+        });
+        console.log(response.data);
 
-    // Example names and surnames
-    const names = ['Alice', 'Bob', 'Charlie', 'David', 'Eva', 'Frank', 'Grace', 'Henry', 'Ivy', 'Jack'];
-    const surnames = ['Smith', 'Johnson', 'Williams', 'Jones', 'Brown', 'Davis', 'Miller', 'Wilson', 'Moore', 'Taylor'];
+        // Map backend data to Reservation interface
+        const reservations: Reservation[] = response.data.reservations.map((reservation: any) => {
+            const [hours, minutes] = reservation.start_time.split(':'); // Split start_time by ':'
+            const [duration_hours, duration_minutes] = reservation.duration_minutes.split(':'); // Split duration_minutes by ':'
+            return {
+                date: reservation.date,
+                start_time: `${hours}:${minutes}`, // Format start_time as 'HH:MM'
+                duration_minutes: parseInt(duration_hours) * 60 + parseInt(duration_minutes), // Convert duration_hours to minutes and add duration_minutes
+                user_first_name: reservation.user_first_name,
+                user_last_name: reservation.user_last_name,
+            };
+        });
 
-    // Create 10 reservations within 3 consecutive days
-    for (let i = 0; i < 10; i++) {
-        const reservationDate = new Date(currentDate);
-        reservationDate.setDate(currentDate.getDate() + Math.floor(i / 3));
-
-        const reservation: Reservation = {
-            date: reservationDate.toISOString().split('T')[0],
-            start_time: `${8 + i % 3}:00`, // Start time ranging from 8:00 to 10:00
-            duration_minutes: 60,
-            employeeName: names[i % names.length],
-            employeeSurname: surnames[i % surnames.length],
-        };
-
-        reservationList.push(reservation);
+        return reservations;
+    }catch(error){
+        console.error('Error getting reservations: ', error);
+        throw error;
     }
-
-    return reservationList;
-};
+} 
 
 export const ReservationService = {
-    generateReservations,
+    getReservations
 };

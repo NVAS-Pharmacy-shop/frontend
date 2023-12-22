@@ -23,8 +23,7 @@ const CompanyCalendar: React.FC = () => {
     const [selectedOption, setSelectedOption] = useState<string>('month'); // Default option is 'month'
 
     useEffect(() => {
-        const generatedReservations = ReservationService.generateReservations();
-        setReservations(generatedReservations);
+        fetchReservations();
     }, []);
 
     const calculateEndTime = (time: string, duration: number): string => {
@@ -43,10 +42,18 @@ const CompanyCalendar: React.FC = () => {
         setSelectedOption(option);
     };
 
+    const fetchReservations = async () => {
+        try {
+            const formattedDate = dayjs(selectedDate).format('YYYY-MM-DD');
+            const reservations = await ReservationService.getReservations(formattedDate, selectedOption);
+            setReservations(reservations);
+        } catch (error) {
+            console.log("Error fetching reservations data.", error);
+        }
+    };
+
     const handleFetchButtonClick = () => {
-        // Perform fetching based on the selectedDate and selectedOption
-        // You can add your logic here
-        console.log(`Fetching data for ${selectedOption} on ${selectedDate}`);
+        fetchReservations();
     };
 
     return (
@@ -72,7 +79,7 @@ const CompanyCalendar: React.FC = () => {
                                     {reservation.start_time} - {calculateEndTime(reservation.start_time, reservation.duration_minutes)}
                                 </Typography>
                                 <Typography variant="body2">
-                                    Employee: {reservation.employeeName} {reservation.employeeSurname}
+                                    Employee: {reservation.user_first_name} {reservation.user_last_name}
                                 </Typography>
                             </div>
                         ));

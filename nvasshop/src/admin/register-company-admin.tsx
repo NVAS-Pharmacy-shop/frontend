@@ -46,7 +46,7 @@ const RegisterCompanyAdmin: React.FC = () => {
             company: selectedCompany,
         };
     
-        api.post('/auth/registerSompanyAdmin/', formData, {
+        api.post('/auth/registerCompanyAdmin/', formData, {
             headers: {
                 'Content-Type': 'application/json',
               },
