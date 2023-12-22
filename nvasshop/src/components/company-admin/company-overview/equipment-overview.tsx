@@ -90,8 +90,11 @@ function EquipmentAdmin(props: EquipmentAdminProps) {
     try{
       await deleteEquipment(id);
       fetchEquipmentData();
-    }catch (error) {
+    }catch (error : any) {
       console.error("Error deleting equipment ", error);
+      if(error.response && error.response.status === 400){
+        alert("Equipment cannot be deleted because there is a reservation for it.");
+      }
     }
   }
 

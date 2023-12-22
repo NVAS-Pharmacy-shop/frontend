@@ -7,6 +7,7 @@ import EquipmentBrowser from "./equipment/equipment-browser";
 import EditCompanyAdminProfile from "./user/company-admin-profile-update";
 import RegisterCompany from "./admin/register-company";
 import RegisterCompanyAdmin from "./admin/register-company-admin";
+import RegisterSytemAdmin from "./admin/register-system-admin";
 import CompaniesOverview from "./company/companies-overview";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import LoginPage from "./pages/LoginPage";
@@ -18,6 +19,7 @@ import AddPickupSchedule from "./components/company-admin/pickup-schedule/add-sc
 import EquipmentAdmin from "./components/company-admin/company-overview/equipment-overview";
 import ChangeCompanyAdminPassword from "./components/company-admin/change-password/ChangePasswordPage";
 import WorkCalendar from "./components/company-admin/pickup-schedule/work-calendar/work-calendar";
+import CompanyCalendar from "./company/company-calendar";
 
 const AppRoutes = () => {
   return (
@@ -35,6 +37,8 @@ const AppRoutes = () => {
               path="/updateAdminProfile/"
               element={<EditCompanyAdminProfile />}
             ></Route>
+            <Route path="/registerSystemAdmin/" element={<RegisterSytemAdmin />}></Route>
+
             <Route
               path="/equipment/:companyId"
               element={<EquipmentBrowser />}
@@ -62,6 +66,7 @@ const AppRoutes = () => {
           <Route element={<LoginPage />} path="/login" />
           <Route element={<RegisterPage />} path="/register" />
           <Route element={<WorkCalendar />} path="/admin/work-calendar/" />
+          <Route element={<CompanyCalendar />} path="/company/work-calendar/" />
         </Routes>
       </AuthProvider>
     </Router>

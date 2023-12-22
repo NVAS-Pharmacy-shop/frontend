@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import './register-company.css';
+import './register-form.css';
 import axios from 'axios';
+import api from '../api';
 
 const RegisterCompany = () => {
   const [name, setName] = useState('');
@@ -20,8 +21,12 @@ const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
             email,
             website,
         };
-
-        axios.post('http://127.0.0.1:8000/api/company/', newCompany)
+        
+        api.post('http://127.0.0.1:8000/api/company/', newCompany, {
+            headers: {
+                'Content-Type': 'application/json',
+              },
+        })
             .then((response) => {
                 alert('Company registered successfully!');
             })
