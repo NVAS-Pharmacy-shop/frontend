@@ -58,9 +58,9 @@ const CompanyCalendar: React.FC = () => {
 
     return (
         <Container className="container">
-            <Typography variant="h4" gutterBottom>
+            <h2  className='title'>
                 Company Calendar
-            </Typography>
+            </h2>
 
             {/* Calendar */}
             <Paper className="work-calendar-paper" variant="elevation">

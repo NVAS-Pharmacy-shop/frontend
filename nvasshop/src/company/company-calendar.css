@@ -152,3 +152,8 @@ User
 .select{
     height: 2.8rem;
 }
+
+.title {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
