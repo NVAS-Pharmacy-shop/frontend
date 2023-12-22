@@ -29,7 +29,6 @@ const AppRoutes = () => {
         <Routes>
           <Route element={<PrivateRoutes />}>
             <Route path="/company/:id" element={<Company />}></Route>
-            
             <Route
               path="/admin/company-overview/"
               element={<CompanyUpdate />}
@@ -38,16 +37,32 @@ const AppRoutes = () => {
               path="/updateAdminProfile/"
               element={<EditCompanyAdminProfile />}
             ></Route>
-            <Route path="/equipment" element={<EquipmentBrowser />}></Route>
-            <Route path="/equipment/:companyId" element={<EquipmentBrowser />}></Route>
-            <Route path="/registerCompany/" element={<RegisterCompany />}></Route>
-            <Route path="/registerCompanyAdmin/" element={<RegisterCompanyAdmin />}></Route>
-            <Route path="/companies" element={<CompaniesOverview />}></Route>
-            <Route path="/add-pickup-schedule/" element={<AddPickupSchedule />}></Route>
             <Route path="/registerSystemAdmin/" element={<RegisterSytemAdmin />}></Route>
+
+            <Route
+              path="/equipment/:companyId"
+              element={<EquipmentBrowser />}
+            ></Route>
+            <Route
+              path="/registerCompany/"
+              element={<RegisterCompany />}
+            ></Route>
+            <Route
+              path="/registerCompanyAdmin/"
+              element={<RegisterCompanyAdmin />}
+            ></Route>
+            <Route
+              path="/add-pickup-schedule/"
+              element={<AddPickupSchedule />}
+            ></Route>
           </Route>
+          <Route path="/equipment" element={<EquipmentBrowser />}></Route>
           <Route path="/" element={<HomePage />}></Route>
-          <Route path="/admin/change-password/" element={<ChangeCompanyAdminPassword />}></Route>
+          <Route
+            path="/admin/change-password/"
+            element={<ChangeCompanyAdminPassword />}
+          ></Route>
+          <Route path="/companies" element={<CompaniesOverview />}></Route>
           <Route element={<LoginPage />} path="/login" />
           <Route element={<RegisterPage />} path="/register" />
           <Route element={<WorkCalendar />} path="/admin/work-calendar/" />

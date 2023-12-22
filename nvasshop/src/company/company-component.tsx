@@ -369,7 +369,7 @@ function Company() {
                           {row.date}
                           {" | "} {row.start_time.slice(0, 8)}
                           {" | "}
-                          {row.duration_minutes}
+                          {row.end_time}
                           {" | "} {row.company_admin.first_name}
                           {" | "}
                           {row.company_admin.last_name}
