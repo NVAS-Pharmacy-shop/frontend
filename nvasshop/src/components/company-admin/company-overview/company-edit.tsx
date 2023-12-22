@@ -384,7 +384,6 @@ function CompanyUpdate() {
                           <TableCell align="right">FirstName</TableCell>
                           <TableCell align="right">Lastname</TableCell>
                           <TableCell align="right">Email</TableCell>
-                          <TableCell>Username</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -395,11 +394,9 @@ function CompanyUpdate() {
                               "&:last-child td, &:last-child th": { border: 0 },
                             }}
                           >
-                            <TableCell component="th" scope="row">
-                              {row.last_name}
-                            </TableCell>
+                          <TableCell align="right">{row.first_name}</TableCell>
+                            <TableCell component="th" scope="row">{row.last_name}</TableCell>
                             <TableCell align="right">{row.email}</TableCell>
-                            <TableCell align="right">{row.username}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
