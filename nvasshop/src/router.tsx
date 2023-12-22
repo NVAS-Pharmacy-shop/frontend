@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { render } from "react-dom";
 import React from "react";
 import Company from "./company/company-component";
-import CompanyUpdate from "./company/company-edit";
+import CompanyUpdate from "./components/company-admin/company-overview/company-edit";
 import EquipmentBrowser from "./equipment/equipment-browser";
 import EditCompanyAdminProfile from "./user/company-admin-profile-update";
 import RegisterCompany from "./admin/register-company";
@@ -14,6 +14,10 @@ import RegisterPage from "./pages/RegisterPage";
 import { AuthProvider } from "./context/AuthContext";
 import Header from "./components/Header";
 import HomePage from "./pages/HomePage";
+import AddPickupSchedule from "./components/company-admin/pickup-schedule/add-schedule/add-pickup-schedule";
+import EquipmentAdmin from "./components/company-admin/company-overview/equipment-overview";
+import ChangeCompanyAdminPassword from "./components/company-admin/change-password/ChangePasswordPage";
+import WorkCalendar from "./components/company-admin/pickup-schedule/work-calendar/work-calendar";
 
 const AppRoutes = () => {
   return (
@@ -24,14 +28,13 @@ const AppRoutes = () => {
           <Route element={<PrivateRoutes />}>
             <Route path="/company/:id" element={<Company />}></Route>
             <Route
-              path="/updateCompany/:id"
+              path="/admin/company-overview/"
               element={<CompanyUpdate />}
             ></Route>
             <Route
               path="/updateAdminProfile/"
               element={<EditCompanyAdminProfile />}
             ></Route>
-            <Route path="/equipment" element={<EquipmentBrowser />}></Route>
             <Route
               path="/equipment/:companyId"
               element={<EquipmentBrowser />}
@@ -44,11 +47,21 @@ const AppRoutes = () => {
               path="/registerCompanyAdmin/"
               element={<RegisterCompanyAdmin />}
             ></Route>
-            <Route path="/companies" element={<CompaniesOverview />}></Route>
+            <Route
+              path="/add-pickup-schedule/"
+              element={<AddPickupSchedule />}
+            ></Route>
           </Route>
+          <Route path="/equipment" element={<EquipmentBrowser />}></Route>
           <Route path="/" element={<HomePage />}></Route>
+          <Route
+            path="/admin/change-password/"
+            element={<ChangeCompanyAdminPassword />}
+          ></Route>
+          <Route path="/companies" element={<CompaniesOverview />}></Route>
           <Route element={<LoginPage />} path="/login" />
           <Route element={<RegisterPage />} path="/register" />
+          <Route element={<WorkCalendar />} path="/admin/work-calendar/" />
         </Routes>
       </AuthProvider>
     </Router>

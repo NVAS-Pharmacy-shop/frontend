@@ -1,0 +1,34 @@
+.form-class {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+  }
+  
+  label {
+    margin-bottom: 10px;
+  }
+  
+  .form-class .add-schedule-input{
+    width: 80%;
+    margin-top: 20px;
+  }
+  
+  .form-class .duration-slider {
+    margin-top: 10px;
+    width: 80%;
+  } 
+  .pickeri
+  {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    width: 80%;
+  }
+  .form-container
+  {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }

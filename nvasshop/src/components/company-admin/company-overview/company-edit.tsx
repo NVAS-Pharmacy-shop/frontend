@@ -26,12 +26,13 @@ import {
   TableCell,
   TableBody,
 } from "@mui/material";
-import NotificationsIcon, { Copyright } from "@mui/icons-material";
+import { Copyright } from "@mui/icons-material";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 import "./company-edit.css";
-import api from "../api";
+import api from "../../../api";
+import EquipmentAdmin from "./equipment-overview";
 
 interface Admin {
   username: string;
@@ -41,10 +42,9 @@ interface Admin {
 }
 
 function CompanyUpdate() {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAwMDAyNDUwLCJpYXQiOjE2OTk5MTYwNTAsImp0aSI6IjIyMDNkZjc5ZGRhMDRjNDQ5MmU2ZjZlZmE3MTU1MWY0IiwidXNlcl9pZCI6NCwiZW1haWwiOiJ1c2VyM0B0ZXN0LmNvbSIsInJvbGUiOiJjb21wYW55X2FkbWluIn0.udxREJ36WmsxSVbtw77nw8RQvn8TO1uZAybM_tdCHQ4";
   const { id } = useParams();
   const [company, setCompany] = useState({
+    id: -1,
     name: "",
     address: "",
     description: "",
@@ -60,6 +60,7 @@ function CompanyUpdate() {
     ],
   });
   const [editedCompany, setEditedCompany] = useState({
+    id: -1,
     name: "",
     address: "",
     description: "",
@@ -77,9 +78,11 @@ function CompanyUpdate() {
   const [admins, setAdmins] = useState<Admin[]>([]);
   const [editMode, setEditMode] = useState(false);
 
+
+
   useEffect(() => {
     api
-      .get(`http://127.0.0.1:8000/api/user/admins/${id}`)
+      .get(`http://127.0.0.1:8000/api/user/admins/companies/`)
       .then((response) => {
         setAdmins(response.data.user);
       })
@@ -87,7 +90,7 @@ function CompanyUpdate() {
         console.error("Error fetching admins", error);
       });
     api
-      .get(`http://127.0.0.1:8000/api/company/${id}`)
+      .get(`http://127.0.0.1:8000/api/company/`)
       .then((response) => {
         setCompany(response.data.company);
         setEditedCompany(response.data.company);
@@ -102,6 +105,7 @@ function CompanyUpdate() {
     setEditMode(!editMode);
   };
 
+  
   useEffect(() => {
     if (!editMode) {
       setCompany(editedCompany);
@@ -110,7 +114,7 @@ function CompanyUpdate() {
 
   const handleSaveClick = () => {
     api
-      .put(`http://127.0.0.1:8000/api/company/${id}`, editedCompany)
+      .put(`http://127.0.0.1:8000/api/company/${company.id}/`, editedCompany)
       .then((response) => {
         const updatedCompany = response.data;
         setEditedCompany(updatedCompany);
@@ -169,7 +173,6 @@ function CompanyUpdate() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
                   sx={{
@@ -234,7 +237,6 @@ function CompanyUpdate() {
                   </div>
                 </Paper>
               </Grid>
-              {/* Recent Deposits */}
               <Grid item xs={12} md={4} lg={3}>
                 <Paper
                   sx={{
@@ -267,52 +269,18 @@ function CompanyUpdate() {
                   <p>{editedCompany?.rate || ""}</p>
                 </Paper>
               </Grid>
-              {/* Recent Orders */}
-              <Grid item xs={12} md={5} lg={6}>
+              <Grid item xs={12} md={7} lg={6.5}>
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  <h2>Equipment</h2>
-                  <TableContainer component={Paper}>
-                    <Table
-                      sx={{ minWidth: 200, maxWidth: 500 }}
-                      aria-label="simple table"
-                    >
-                      <TableHead>
-                        <TableRow>
-                          <TableCell>Name</TableCell>
-                          <TableCell align="right">Description</TableCell>
-                          <TableCell align="right">Quantity</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {editedCompany?.equipment.map((row) => (
-                          <TableRow
-                            key={row.name}
-                            sx={{
-                              "&:last-child td, &:last-child th": { border: 0 },
-                            }}
-                          >
-                            <TableCell component="th" scope="row">
-                              {row.name}
-                            </TableCell>
-                            <TableCell align="right">
-                              {row.description}
-                            </TableCell>
-                            <TableCell align="right">{row.quantity}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
+                  <EquipmentAdmin companyId={Number(id)}></EquipmentAdmin>
                 </Paper>
               </Grid>
-              <Grid item xs={12} md={4} lg={6}>
+              <Grid item xs={12} md={5} lg={5.5}>
                 <Paper
                   sx={{
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                  }}
-                >
+                  }}>
                   <h2>Company admins</h2>
                   <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 200 }} aria-label="simple table">
