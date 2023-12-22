@@ -26,13 +26,6 @@ const CompanyCalendar: React.FC = () => {
         fetchReservations();
     }, []);
 
-    const calculateEndTime = (time: string, duration: number): string => {
-        const dateTime = dayjs(`2000-01-01 ${time}`);
-        const endTime = dateTime.add(duration, 'minutes');
-        const timeOnly = endTime.format('HH:mm');
-        return timeOnly;
-    };
-
     const handleDayClick = (date: Date) => {
         setSelectedDate(date);
     };
@@ -46,6 +39,7 @@ const CompanyCalendar: React.FC = () => {
         try {
             const formattedDate = dayjs(selectedDate).format('YYYY-MM-DD');
             const reservations = await ReservationService.getReservations(formattedDate, selectedOption);
+            console.log(reservations)
             setReservations(reservations);
         } catch (error) {
             console.log("Error fetching reservations data.", error);
@@ -70,13 +64,16 @@ const CompanyCalendar: React.FC = () => {
                     onClickDay={handleDayClick}
                     tileContent={({ date }) => {
                         const dateReservations = reservations.filter((reservation) => {
-                            return reservation.date === date?.toISOString().split('T')[0];
+                            if (reservation.date !== undefined && reservation.date !== null) {
+                                return new Date(reservation.date).toDateString() === date.toDateString();
+                            }
+                            return false;
                         });
 
                         return dateReservations.map((reservation, index) => (
                             <div key={index}>
                                 <Typography variant="body2">
-                                    {reservation.start_time} - {calculateEndTime(reservation.start_time, reservation.duration_minutes)}
+                                    {reservation.start_time} - {reservation.end_time}
                                 </Typography>
                                 <Typography variant="body2">
                                     Employee: {reservation.user_first_name} {reservation.user_last_name}
