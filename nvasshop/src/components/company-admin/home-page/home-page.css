@@ -71,3 +71,10 @@
     flex-direction: column;
     align-items: center;
 }
+.data-sales:hover{
+    background-color: #1364b4;
+}
+.h3-data
+{
+    margin-top: 5px;
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { EquipmentReservation, Reservation, ReservedEquipment } from "../../../service/https/reservation-service";
+import { EquipmentReservation, ReservedEquipment } from "../../../service/https/reservation-service";
 import { ReservationService } from "../../../service/https/reservation-service";
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import Calendar from "react-calendar";
@@ -7,7 +7,7 @@ import Tooltip from '@mui/material/Tooltip';
 import "./equipment-delivering-calendar.css";
 
 const EquipmentDeliveringCalendar = () => {
-    const[reservations, setReservations] = useState<EquipmentReservation[]>([]);
+    const [reservations, setReservations] = useState<EquipmentReservation[]>([]);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [showPopup, setShowPopup] = useState(false);
     
@@ -16,16 +16,16 @@ const EquipmentDeliveringCalendar = () => {
     }, [])
 
     const fetchReservations = async () => {
-        try{
+        try {
             const reservations = await ReservationService.getEquipmentReservations();
             setReservations(reservations);
             console.log(reservations);
-        }catch(error){
+        } catch (error) {
             console.log("Error fetching reservations", error);
         }
     }
 
-    const handleClickDay = (value : any) => {
+    const handleClickDay = (value: any) => {
         setSelectedDate(value);
         setShowPopup(true);
     }
@@ -34,36 +34,43 @@ const EquipmentDeliveringCalendar = () => {
         ReservationService.pickupReservation(reservationId, equipment);
         fetchReservations();
     }
+
     const tileDisabled = ({ date, view }: { date: Date; view: string }) => {
         const today = new Date();
         today.setDate(today.getDate() - 1);
-        return date <  today;
+        return date < today;
     };
-    return(
-        <div className = "equipment-delivering-calendar-main">
+
+    return (
+        <div className="equipment-delivering-calendar-main">
+            <Typography variant="h4" gutterBottom>
+                Equipment Reservation
+            </Typography>
             <Paper className="reservation-calendar-paper" variant="elevation">
                 <Calendar
-                className="reservation-calendar"
-                value={selectedDate}
-                onClickDay={handleClickDay}
-                tileDisabled={tileDisabled}
-                tileContent={({ date }) => {
-                    const dateReservations = reservations.filter((term) => {
-                    if (term.date !== undefined && term.date !== null) {
-                        return (
-                        new Date(term.date).toDateString() === date.toDateString()
-                        );
-                    }
-                    return false;
-                    });
-                    return dateReservations.map((term) => (
-                    <div key={term.reservation_id}>
-                        <Typography variant="body2">
-                        {term.user_first_name} {term.user_last_name}
-                        </Typography>
-                    </div>
-                    ));
-                }}
+                    className="reservation-calendar"
+                    value={selectedDate}
+                    onClickDay={handleClickDay}
+                    tileDisabled={tileDisabled}
+                    tileContent={({ date }) => {
+                        const dateReservations = reservations.filter((term) => {
+                            if (term.date !== undefined && term.date !== null) {
+                                return (
+                                    new Date(term.date).toDateString() === date.toDateString()
+                                );
+                            }
+                            return false;
+                        });
+                        return dateReservations.map((term) => (
+                            <div key={term.reservation_id}>
+                                <Tooltip title="Click for more">
+                                    <Typography variant="body2">
+                                        {term.user_first_name} {term.user_last_name}
+                                    </Typography>
+                                </Tooltip>
+                            </div>
+                        ));
+                    }}
                 />
             </Paper>
             {showPopup && (
@@ -131,7 +138,7 @@ const EquipmentDeliveringCalendar = () => {
                 </div>
             )}
         </div>
-    )
+    );
 }
 
 export default EquipmentDeliveringCalendar;

@@ -7,6 +7,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import { Link } from 'react-router-dom';
 import "./home-page.css";
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 
 function AdminHomePage() {
     const[customers, setCustomers] = useState<Customer[]>();
@@ -49,19 +50,22 @@ function AdminHomePage() {
                 <div className="link">
                     <Link to="/admin/company-overview/" className="link-button">Company info <InfoIcon /></Link>
                 </div>
+                <div className="link">
+                    <Link to="/admin/equipment-reservations/" className="link-button">Reservations <EventAvailableIcon /></Link>
+                </div>
             </div>
             <div className = "right_panel">
                 <div className = "data">
                     <div className = "data-sales">
-                        <h3>Total customers</h3>
-                        <h1>154</h1>
+                        <h3 className = "h3-data">Total customers</h3>
+                        <h1>{customers.length}</h1>
                     </div>
                     <div className = "data-sales">
-                        <h3>Revenue</h3>
-                        <h1>154$</h1>
+                        <h3 className = "h3-data">Revenue(last month)</h3>
+                        <h1>1545.00 $</h1>
                     </div>
                     <div className = "data-sales">
-                        <h3>Equipment</h3>
+                        <h3 className = "h3-data">Equipment</h3>
                         <h1>154</h1>
                     </div>
                 </div>
