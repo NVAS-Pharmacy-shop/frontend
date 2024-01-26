@@ -8,6 +8,7 @@ import "./add-pickup-schedule.css";
 import { createPickupSchedule } from "../../../../service/https/pickup-schedule-service";
 import { PickupSchedule, PickupScheduleInput } from "../../../../model/company";
 import { useNavigate } from "react-router-dom";
+import Alert from '@mui/material/Alert';
 
 const AddPickupSchedule = () => {
     const[formData, setFormData] = useState({
@@ -17,6 +18,7 @@ const AddPickupSchedule = () => {
         start_time: dayjs(),
         duration_minutes: 0
     });
+    const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
     
     const handleChange = (e: { target: { name: any; value: any; }; }) => {
@@ -57,11 +59,9 @@ const AddPickupSchedule = () => {
             await createPickupSchedule(pickupScheduleData);
             navigate("/admin/work-calendar/")
         } catch (error) {
+            setError("An error occurred: ");
         }
     };
-    
-
-
 
     return(
         <div className="form-container">
@@ -106,9 +106,16 @@ const AddPickupSchedule = () => {
             
                 <Button variant="contained" type="submit">Submit</Button>
             </form>
+            {error && <OverlappingAlert />}
         </div>
         
     );
+}
+
+function OverlappingAlert() {
+    return (
+      <Alert severity="error">You cannot be schedule due to schedule overlapping!</Alert>
+    )
 }
 
 export default AddPickupSchedule;

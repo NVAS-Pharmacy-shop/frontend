@@ -44,7 +44,7 @@ const EquipmentDeliveringCalendar = () => {
     return (
         <div className="equipment-delivering-calendar-main">
             <Typography variant="h4" gutterBottom>
-                Equipment Reservation
+                Equipment Reservations
             </Typography>
             <Paper className="reservation-calendar-paper" variant="elevation">
                 <Calendar
