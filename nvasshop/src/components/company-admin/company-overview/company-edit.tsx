@@ -181,34 +181,6 @@ function CompanyUpdate() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: "flex" }}>
-        <CssBaseline />
-        <AppBar position="absolute">
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{
-                marginRight: "36px",
-                ...{ display: "none" },
-              }}
-            >
-              <AccessTimeFilledIcon />
-            </IconButton>
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
-            >
-              Dashboard
-            </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary"></Badge>
-            </IconButton>
-          </Toolbar>
-        </AppBar>
         <Box
           component="main"
           sx={{
@@ -217,7 +189,6 @@ function CompanyUpdate() {
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
             flexGrow: 1,
-            height: "100vh",
             overflow: "auto",
           }}
         >
