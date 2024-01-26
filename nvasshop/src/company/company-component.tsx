@@ -13,7 +13,6 @@ import {
   Box,
   Button,
   Grid,
-  Paper,
   Slider,
   Tab,
   Tabs,
@@ -25,12 +24,6 @@ import {
   LocalizationProvider,
   renderTimeViewClock,
 } from "@mui/x-date-pickers";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import AuthContext from "../context/AuthContext";
 import { Dropdown } from "react-bootstrap";
 
@@ -95,19 +88,6 @@ function Company() {
   const handleTabChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-
-  // const fetchSchedules = async () => {
-  //   try {
-  //     const schedules = await getSchedules();
-  //     setSchedules(schedules);
-  //   } catch (error) {
-  //     console.log('Error fetching equipment data.', error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchSchedules();
-  // }, []);
 
   const reserve = () => {
     {

@@ -20,6 +20,8 @@ import EquipmentAdmin from "./components/company-admin/company-overview/equipmen
 import ChangeCompanyAdminPassword from "./components/company-admin/change-password/ChangePasswordPage";
 import WorkCalendar from "./components/company-admin/pickup-schedule/work-calendar/work-calendar";
 import CompanyCalendar from "./company/company-calendar";
+import AdminHomePage from "./components/company-admin/home-page/home-page";
+import EquipmentDeliveringCalendar from "./components/company-admin/equipment-delivering/equipment-delivering-calendar";
 
 const AppRoutes = () => {
   return (
@@ -67,6 +69,8 @@ const AppRoutes = () => {
           <Route element={<RegisterPage />} path="/register" />
           <Route element={<WorkCalendar />} path="/admin/work-calendar/" />
           <Route element={<CompanyCalendar />} path="/company/work-calendar/" />
+          <Route element={<AdminHomePage />} path="/admin/homepage/" />
+          <Route element={<EquipmentDeliveringCalendar />} path="/admin/equipment-reservations/" />
         </Routes>
       </AuthProvider>
     </Router>

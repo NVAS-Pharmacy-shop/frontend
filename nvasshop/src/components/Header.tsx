@@ -12,7 +12,9 @@ function Header() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="#home">NVAS Pharmacy</Navbar.Brand>
+        <Navbar.Brand href="#home">
+          <img src="LogoNVAS.png"/>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">

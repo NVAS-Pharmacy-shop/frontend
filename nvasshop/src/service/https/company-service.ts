@@ -1,5 +1,5 @@
 import api from "../../api";
-import { Company } from "../../model/company";
+import { Company, Customer } from "../../model/company";
 
 const getAllCompanies = async (
   name: string,
@@ -18,3 +18,19 @@ const getAllCompanies = async (
 };
 
 export default getAllCompanies;
+
+
+export const getCompanyCustomers = async () : Promise<Customer[]> => {
+  try{
+    const response = await api.get('/company/company_customers', {
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+    return response.data["customers"];
+  } catch(error) {
+    console.error('Error getting equipment: ', error);
+    throw error;
+  }
+  
+}
