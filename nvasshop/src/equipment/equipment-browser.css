@@ -21,7 +21,14 @@
     border-radius: 4px;
   }
   
-  .apply-filters {
+  .filters-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 30px;
+  }
+
+  .filters-button {
     padding: 0.5em 1em;
     color: white;
     background-color: #007bff;
@@ -29,8 +36,7 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: large;
-    margin-left: auto;
-    display: block;
+    margin-left: 10px; /* Adds space to the left of each button */
   }
   
   .equipment-grid {
