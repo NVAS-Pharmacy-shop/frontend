@@ -18,7 +18,7 @@ function Header() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            {user.role === "company_admin" ? (
+          {user && user.role === "company_admin" ? (
               <Nav.Link as={Link} to="/admin/homepage/">
                 Home
               </Nav.Link>
