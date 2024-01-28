@@ -17,3 +17,20 @@ export const changeAdminPassword = async (newPassword: string): Promise<void> =>
       throw error;
     }
   };
+
+  export const getCompanyId = async (): Promise<{company_id: number}> => {
+    try {
+      const response = await api.get(
+        "/user/admins/companyId/",
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error getting companyId: ", error);
+      throw error;
+    }
+  };

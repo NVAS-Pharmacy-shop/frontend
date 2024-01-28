@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import './equipment-browser.css';
 import { useParams } from 'react-router-dom';
+import { getCompanyId } from "../service/https/company-admin-service";
+import AuthContext from "../context/AuthContext";
 
 const equipmentTypeMapping: { [key: number]: string } = {
     1: 'Diagnostic Equipment',
@@ -31,10 +33,12 @@ interface Company {
     rate: number;
 }
 
-const EquipmentBrowser = () => {    
-    const { companyId } = useParams<{ companyId?: string }>();
+const EquipmentBrowser = () => {
+    const { user } = useContext(AuthContext);
+    const [userRole, setUserRole] = useState<string | null>(null);
+    const [userCompanyId, setUserCompanyId] = useState<string | null>(null);
     const [filters, setFilters] = useState({
-        company_id: companyId || '',
+        company_id: userCompanyId || '',
         name_substring: '',
         type: '',
         company_rating: ''
@@ -44,15 +48,29 @@ const EquipmentBrowser = () => {
     const [shouldFetch, setShouldFetch] = useState(false);
 
     useEffect(() => {
-        fetchEquipment();
-    }, []);
+        if (user && user.role === 'company_admin') {
+            getCompanyId().then(({ company_id }) => {
+                setUserCompanyId(company_id.toString());
+                setShouldFetch(true);
+            });
+        } else {
+            setShouldFetch(true);
+        }
+    }, [user]);
 
     useEffect(() => {
-      if (shouldFetch) {
-          fetchEquipment();
-          setShouldFetch(false); // Reset the trigger
-      }
-  }, [shouldFetch]); // This effect runs whenever `shouldFetch` changes
+        setFilters(prevFilters => ({
+            ...prevFilters,
+            company_id: userCompanyId || '',
+        }));
+    }, [userCompanyId]);
+
+    useEffect(() => {
+        if (shouldFetch) {
+            fetchEquipment();
+            setShouldFetch(false);
+        }
+    }, [shouldFetch]);
 
     const fetchCompany = async (id: string) => {
         if (companies[id]) {
@@ -82,13 +100,13 @@ const EquipmentBrowser = () => {
     };
 
     const resetFilters = () => {
-      setFilters({
-        company_id: companyId || '',
-        name_substring: '',
-        type: '',
-        company_rating: ''
-      });
-      setShouldFetch(true); // Set the trigger to fetch equipment
+        setFilters({
+            company_id: userCompanyId || '',
+            name_substring: '',
+            type: '',
+            company_rating: ''
+        });
+        setShouldFetch(true); // Set the trigger to fetch equipment
     };
 
     const handleFilterChange = <T extends HTMLInputElement | HTMLSelectElement>(event: React.ChangeEvent<T>) => {
@@ -123,7 +141,7 @@ const EquipmentBrowser = () => {
                 <button onClick={resetFilters} className="filters-button">Reset Filters</button>
                 <button onClick={fetchEquipment} className="filters-button">Apply Filters</button>
             </div>
-            
+
             <ul className="equipment-list equipment-grid">
                 {equipment.map((item) => (
                     <li key={item.id} className="equipment-item">

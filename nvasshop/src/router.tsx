@@ -42,11 +42,10 @@ const AppRoutes = () => {
             <Route path="/registerCompanyAdmin" element={<PrivateRoute component={RegisterCompanyAdmin} requiredRoles={['system_admin']} />} />
             <Route path="/registerCompany" element={<PrivateRoute component={RegisterCompany} requiredRoles={['system_admin']} />} />
 
-            <Route path="/equipment/:companyId" element={<PrivateRoute component={EquipmentBrowser} requiredRoles={['company_admin']} />} />
             <Route path="/admin/work-calendar/" element={<PrivateRoute component={WorkCalendar} requiredRoles={['company_admin']} />} />
             <Route path="/company/work-calendar/" element={<PrivateRoute component={CompanyCalendar} requiredRoles={['company_admin']} />} />
             
-            <Route path="/equipment" element={<PrivateRoute component={EquipmentBrowser} requiredRoles={['system_admin', 'employee']} />} />
+            <Route path="/equipment" element={<PrivateRoute component={EquipmentBrowser} requiredRoles={['system_admin', 'employee', 'company_admin']} />} />
             <Route path="/admin/change-password/" element={<PrivateRoute component={ChangeCompanyAdminPassword} requiredRoles={['company_admin', 'system_admin']} />} />
             <Route
               path="/add-pickup-schedule/"
