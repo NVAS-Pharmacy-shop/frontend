@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import "./Header.css";
 
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -16,7 +17,7 @@ function Header() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/">
+            <Nav.Link as={Link} to="/" className="nav-link">
               Home
             </Nav.Link>
             {/* <Nav.Link as={Link} to="/users">Users</Nav.Link> */}
@@ -26,9 +27,11 @@ function Header() {
                 Companies
               </NavDropdown.Item>
 
-              <NavDropdown.Item as={Link} to="/equipment">
-                Equipment
-              </NavDropdown.Item>
+              {user && (
+                <NavDropdown.Item as={Link} to="/equipment">
+                  Equipment
+                </NavDropdown.Item>
+              )}
             </NavDropdown>
 
             {user && user.role === 'system_admin' && (
@@ -47,12 +50,34 @@ function Header() {
               </NavDropdown>
             )}
 
+            {user && user.role === 'company_admin' && (
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <NavDropdown title="Calendar">
+                  <NavDropdown.Item as={Link} to="/admin/work-calendar/">
+                    My Calendar
+                  </NavDropdown.Item>
+
+                  <NavDropdown.Item as={Link} to="/company/work-calendar/">
+                    Company Calendar
+                  </NavDropdown.Item>
+                </NavDropdown>
+
+                <Nav.Link as={Link} to="/admin/company-overview">
+                  My Company
+                </Nav.Link>
+
+                <Nav.Link as={Link} to="/updateAdminProfile">
+                  My Profile
+                </Nav.Link>
+              </div>
+            )}
+
             {user ? (
-              <Nav.Link as={Link} to="/login" onClick={logoutUser}>
+              <Nav.Link as={Link} to="/login" onClick={logoutUser} className="nav-link">
                 Logout
               </Nav.Link>
             ) : (
-              <Nav.Link as={Link} to="/login">
+              <Nav.Link as={Link} to="/login" className="nav-link">
                 Login
               </Nav.Link>
             )}

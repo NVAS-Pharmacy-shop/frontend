@@ -29,28 +29,21 @@ const AppRoutes = () => {
         <Header />
         <Routes>
           <Route element={<PrivateRoutes />}>
-            <Route path="/company/:id" element={<Company />}></Route>
-            <Route
-              path="/admin/company-overview/"
-              element={<CompanyUpdate />}
-            ></Route>
-            <Route
-              path="/updateAdminProfile/"
-              element={<EditCompanyAdminProfile />}
-            ></Route>
+
+            <Route path="/company/:id" element={<Company />}></Route> {/* Dodati guard, prepostavljam da je employee, nisam siguran */}
+            <Route path="/equipment" element={ <EquipmentBrowser/> } />
+
             <Route path="/registerSystemAdmin" element={<PrivateRoute component={RegisterSytemAdmin} requiredRoles={['system_admin']} />} />
             <Route path="/registerCompanyAdmin" element={<PrivateRoute component={RegisterCompanyAdmin} requiredRoles={['system_admin']} />} />
             <Route path="/registerCompany" element={<PrivateRoute component={RegisterCompany} requiredRoles={['system_admin']} />} />
 
             <Route path="/admin/work-calendar/" element={<PrivateRoute component={WorkCalendar} requiredRoles={['company_admin']} />} />
             <Route path="/company/work-calendar/" element={<PrivateRoute component={CompanyCalendar} requiredRoles={['company_admin']} />} />
-            
-            <Route path="/equipment" element={<PrivateRoute component={EquipmentBrowser} requiredRoles={['system_admin', 'employee', 'company_admin']} />} />
+            <Route path="/updateAdminProfile/" element={<PrivateRoute component={EditCompanyAdminProfile} requiredRoles={['company_admin']} />} />
+            <Route path="/admin/company-overview/" element={<PrivateRoute component={CompanyUpdate} requiredRoles={['company_admin']} />} />
+            <Route path="/add-pickup-schedule/" element={<PrivateRoute component={AddPickupSchedule} requiredRoles={['company_admin']} />} />
             <Route path="/admin/change-password/" element={<PrivateRoute component={ChangeCompanyAdminPassword} requiredRoles={['company_admin', 'system_admin']} />} />
-            <Route
-              path="/add-pickup-schedule/"
-              element={<AddPickupSchedule />}
-            ></Route>
+            
           </Route>
           <Route path="/" element={<HomePage />}></Route>
           <Route path="/companies" element={<CompaniesOverview />}></Route>
