@@ -12,7 +12,7 @@ function Header() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="#home">NVAS Pharmacy</Navbar.Brand>
+        <Navbar.Brand href="/">NVAS Pharmacy</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -30,6 +30,22 @@ function Header() {
                 Equipment
               </NavDropdown.Item>
             </NavDropdown>
+
+            {user && user.role === 'system_admin' && (
+              <NavDropdown title="Register new">
+                <NavDropdown.Item as={Link} to="/registerSystemAdmin">
+                  System Admin
+                </NavDropdown.Item>
+
+                <NavDropdown.Item as={Link} to="/registerCompanyAdmin">
+                  Company Admin
+                </NavDropdown.Item>
+
+                <NavDropdown.Item as={Link} to="/registerCompany">
+                  Company
+                </NavDropdown.Item>
+              </NavDropdown>
+            )}
 
             {user ? (
               <Nav.Link as={Link} to="/login" onClick={logoutUser}>
