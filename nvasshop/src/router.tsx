@@ -21,7 +21,8 @@ import ChangeCompanyAdminPassword from "./components/company-admin/change-passwo
 import WorkCalendar from "./components/company-admin/pickup-schedule/work-calendar/work-calendar";
 import CompanyCalendar from "./company/company-calendar";
 import PrivateRoute from "./privateRoute";
-
+import AdminHomePage from "./components/company-admin/home-page/home-page";
+import EquipmentDeliveringCalendar from "./components/company-admin/equipment-delivering/equipment-delivering-calendar";
 const AppRoutes = () => {
   return (
     <Router>
@@ -42,6 +43,8 @@ const AppRoutes = () => {
             <Route path="/updateAdminProfile/" element={<PrivateRoute component={EditCompanyAdminProfile} requiredRoles={['company_admin']} />} />
             <Route path="/admin/company-overview/" element={<PrivateRoute component={CompanyUpdate} requiredRoles={['company_admin']} />} />
             <Route path="/add-pickup-schedule/" element={<PrivateRoute component={AddPickupSchedule} requiredRoles={['company_admin']} />} />
+            <Route path="/admin/equipment-reservations/" element={<PrivateRoute component={EquipmentDeliveringCalendar} requiredRoles={['company_admin']} />} />
+            <Route path="/admin/homepage/" element={<PrivateRoute component={AdminHomePage} requiredRoles={['company_admin']} />} />
             <Route path="/admin/change-password/" element={<PrivateRoute component={ChangeCompanyAdminPassword} requiredRoles={['company_admin', 'system_admin']} />} />
             
           </Route>

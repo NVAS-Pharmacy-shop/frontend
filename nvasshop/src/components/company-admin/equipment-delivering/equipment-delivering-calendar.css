@@ -1,0 +1,48 @@
+.reservation-table
+{
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    table-layout: fixed;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.popup
+{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin-top: 5em;
+    margin-bottom: 3em;
+}
+.reservations-calendar-paper
+{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 5em;
+}
+
+.reservation-calendar
+{
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 85%;
+    height: auto;
+    justify-self: center;
+    border: 0;
+}
+.reservation-calendar-paper
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+}
+.equipment-delivering-calendar-main
+{
+    margin-top:3em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
