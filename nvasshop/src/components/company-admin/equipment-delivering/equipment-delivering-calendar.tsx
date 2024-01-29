@@ -30,9 +30,9 @@ const EquipmentDeliveringCalendar = () => {
         setShowPopup(true);
     }
 
-    const handlePickingUp = (reservationId: number, equipment: ReservedEquipment[]) => {
-        ReservationService.pickupReservation(reservationId, equipment);
-        fetchReservations();
+    const handlePickingUp = async (reservationId: number, equipment: ReservedEquipment[]) => {
+        await ReservationService.pickupReservation(reservationId, equipment);
+        await fetchReservations();
     }
 
     const tileDisabled = ({ date, view }: { date: Date; view: string }) => {

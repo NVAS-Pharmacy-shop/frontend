@@ -9,49 +9,49 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 
 function Header() {
   let { user, logoutUser } = useContext(AuthContext);
-  return (
-    <Navbar expand="lg" className="bg-body-tertiary">
-      <Container>
-        <Navbar.Brand href="#home">
-          <img src="LogoNVAS.png"/>
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-          {user && user.role === "company_admin" ? (
-              <Nav.Link as={Link} to="/admin/homepage/">
-                Home
-              </Nav.Link>
-            ) : (
-              <Nav.Link as={Link} to="/">
-                Home
-              </Nav.Link>
-            )}
+    return (
+      <Navbar expand="lg" className="bg-body-tertiary">
+        <Container>
+          <Navbar.Brand href="#home">
+            <img src ="/LogoNVAS.png" width={150} height={50}/>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+            {user && user.role === "company_admin" ? (
+                <Nav.Link as={Link} to="/admin/homepage/">
+                  Home
+                </Nav.Link>
+              ) : (
+                <Nav.Link as={Link} to="/">
+                  Home
+                </Nav.Link>
+              )}
 
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to="/companies">
-                Companies
-              </NavDropdown.Item>
+              <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                <NavDropdown.Item as={Link} to="/companies">
+                  Companies
+                </NavDropdown.Item>
 
-              <NavDropdown.Item as={Link} to="/equipment">
-                Equipment
-              </NavDropdown.Item>
-            </NavDropdown>
+                <NavDropdown.Item as={Link} to="/equipment">
+                  Equipment
+                </NavDropdown.Item>
+              </NavDropdown>
 
-            {user ? (
-              <Nav.Link as={Link} to="/login" onClick={logoutUser}>
-                Logout
-              </Nav.Link>
-            ) : (
-              <Nav.Link as={Link} to="/login">
-                Login
-              </Nav.Link>
-            )}
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
-  );
+              {user ? (
+                <Nav.Link as={Link} to="/login" onClick={logoutUser}>
+                  Logout
+                </Nav.Link>
+              ) : (
+                <Nav.Link as={Link} to="/login">
+                  Login
+                </Nav.Link>
+              )}
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    );
 }
 
 export default Header;
