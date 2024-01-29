@@ -5,15 +5,17 @@ import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, 
 import Calendar from "react-calendar";
 import Tooltip from '@mui/material/Tooltip';
 import "./equipment-delivering-calendar.css";
+import UploadImageDialog from "./add-qr-code-popup/upload-qr-code";
 
 const EquipmentDeliveringCalendar = () => {
     const [reservations, setReservations] = useState<EquipmentReservation[]>([]);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [showPopup, setShowPopup] = useState(false);
+    const [addQrCodeDialogOpen, setAddQrCodeDialogOpen] = useState(false);
     
     useEffect(() => {
         fetchReservations();
-    }, [])
+    }, [addQrCodeDialogOpen])
 
     const fetchReservations = async () => {
         try {
@@ -30,9 +32,9 @@ const EquipmentDeliveringCalendar = () => {
         setShowPopup(true);
     }
 
-    const handlePickingUp = (reservationId: number, equipment: ReservedEquipment[]) => {
-        ReservationService.pickupReservation(reservationId, equipment);
-        fetchReservations();
+    const handlePickingUp = async (reservationId: number, equipment: ReservedEquipment[]) => {
+        await ReservationService.pickupReservation(reservationId, equipment);
+        await fetchReservations();
     }
 
     const tileDisabled = ({ date, view }: { date: Date; view: string }) => {
@@ -41,11 +43,20 @@ const EquipmentDeliveringCalendar = () => {
         return date < today;
     };
 
+    const setShowQrCodeUpload = (value : boolean) => {
+        setAddQrCodeDialogOpen(value);
+    }
+
+    const handleUploadImageClose = () => {
+        setAddQrCodeDialogOpen(false);
+    }
+
     return (
         <div className="equipment-delivering-calendar-main">
             <Typography variant="h4" gutterBottom>
                 Equipment Reservations
             </Typography>
+            <Button className="addqrcode" variant="contained" color="primary" onClick={() => setShowQrCodeUpload(true)}>Add QR Code</Button>
             <Paper className="reservation-calendar-paper" variant="elevation">
                 <Calendar
                     className="reservation-calendar"
@@ -137,6 +148,7 @@ const EquipmentDeliveringCalendar = () => {
                     </div>
                 </div>
             )}
+            <UploadImageDialog open={addQrCodeDialogOpen} onClose={handleUploadImageClose}></UploadImageDialog>
         </div>
     );
 }

@@ -15,7 +15,7 @@ function Header() {
       <Container>
 
         <Navbar.Brand href="/">
-          <img src="LogoNVAS.png" />
+          <img src="/LogoNVAS.png" width={150} height={50} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -34,7 +34,6 @@ function Header() {
               <NavDropdown.Item as={Link} to="/companies">
                 Companies
               </NavDropdown.Item>
-
               {user && (
                 <NavDropdown.Item as={Link} to="/equipment">
                   Equipment
@@ -94,6 +93,7 @@ function Header() {
       </Container>
     </Navbar>
   );
+
 }
 
 export default Header;
