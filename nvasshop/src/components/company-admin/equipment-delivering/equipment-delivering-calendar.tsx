@@ -56,7 +56,13 @@ const EquipmentDeliveringCalendar = () => {
             <Typography variant="h4" gutterBottom>
                 Equipment Reservations
             </Typography>
-            <Button className="addqrcode" variant="contained" color="primary" onClick={() => setShowQrCodeUpload(true)}>Add QR Code</Button>
+            <Button 
+                className="addqrcode" 
+                variant="contained" 
+                color="primary" 
+                onClick={() => setShowQrCodeUpload(true)}
+                style={{ marginBottom: '2em', marginTop: '1em' }}
+            >Upload QR Code</Button>
             <Paper className="reservation-calendar-paper" variant="elevation">
                 <Calendar
                     className="reservation-calendar"
