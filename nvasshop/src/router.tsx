@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { render } from "react-dom";
 import React from "react";
+import { AuthProvider } from "./context/AuthContext";
 import Company from "./company/company-component";
 import CompanyUpdate from "./components/company-admin/company-overview/company-edit";
 import EquipmentBrowser from "./equipment/equipment-browser";
@@ -12,7 +13,6 @@ import CompaniesOverview from "./company/companies-overview";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import { AuthProvider } from "./context/AuthContext";
 import Header from "./components/Header";
 import HomePage from "./pages/HomePage";
 import AddPickupSchedule from "./components/company-admin/pickup-schedule/add-schedule/add-pickup-schedule";
@@ -22,6 +22,7 @@ import WorkCalendar from "./components/company-admin/pickup-schedule/work-calend
 import CompanyCalendar from "./company/company-calendar";
 import AdminHomePage from "./components/company-admin/home-page/home-page";
 import EquipmentDeliveringCalendar from "./components/company-admin/equipment-delivering/equipment-delivering-calendar";
+import ContractForm from "./hospital/add-contract-form";
 
 const AppRoutes = () => {
   return (
@@ -71,6 +72,10 @@ const AppRoutes = () => {
           <Route element={<CompanyCalendar />} path="/company/work-calendar/" />
           <Route element={<AdminHomePage />} path="/admin/homepage/" />
           <Route element={<EquipmentDeliveringCalendar />} path="/admin/equipment-reservations/" />
+        
+          <Route path="/hospital/create-contract/" element={<ContractForm />}/>
+
+          
         </Routes>
       </AuthProvider>
     </Router>

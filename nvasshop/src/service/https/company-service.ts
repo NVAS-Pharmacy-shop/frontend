@@ -1,5 +1,5 @@
 import api from "../../api";
-import { Company, Customer } from "../../model/company";
+import { Company, Customer, Equipment } from "../../model/company";
 
 const getAllCompanies = async (
   name: string,
@@ -32,5 +32,36 @@ export const getCompanyCustomers = async () : Promise<Customer[]> => {
     console.error('Error getting equipment: ', error);
     throw error;
   }
-  
 }
+
+export const getCompanies = async () : Promise<Company[]> => {
+  try{
+    const response = await api.get('/company/', {
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+    console.log(response.data);
+    return response.data["company"];
+  } catch(error) {
+    console.error('Error getting equipment: ', error);
+    throw error;
+  }
+}
+
+export const getCompanyEquipment = async (id: number) : Promise<Equipment> => {
+  try{
+    const response = await api.get(`/company/equipment/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+    return response.data["equipment"];
+  } catch(error) {
+    console.error('Error getting equipment: ', error);
+    throw error;
+  }
+}
+
+
+

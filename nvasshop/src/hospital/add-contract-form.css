@@ -1,0 +1,25 @@
+.equipment-div
+{
+    margin: 5px;
+    margin-bottom:20px;
+}
+.quantity-input
+{
+    margin-top:5px;
+}
+.form-add-contract
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.add-contract-main-container
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.select-company
+{
+    width: 400px;
+}
