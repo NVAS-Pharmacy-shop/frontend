@@ -23,6 +23,7 @@ import CompanyCalendar from "./company/company-calendar";
 import PrivateRoute from "./privateRoute";
 import AdminHomePage from "./components/company-admin/home-page/home-page";
 import EquipmentDeliveringCalendar from "./components/company-admin/equipment-delivering/equipment-delivering-calendar";
+import MapComponent from "./map/map";
 const AppRoutes = () => {
   return (
     <Router>
@@ -45,6 +46,7 @@ const AppRoutes = () => {
             <Route path="/add-pickup-schedule/" element={<PrivateRoute component={AddPickupSchedule} requiredRoles={['company_admin']} />} />
             <Route path="/admin/equipment-reservations/" element={<PrivateRoute component={EquipmentDeliveringCalendar} requiredRoles={['company_admin']} />} />
             <Route path="/admin/homepage/" element={<PrivateRoute component={AdminHomePage} requiredRoles={['company_admin']} />} />
+            <Route path="/map/" element={<PrivateRoute component={MapComponent} requiredRoles={['company_admin']} />} />
             <Route path="/admin/change-password/" element={<PrivateRoute component={ChangeCompanyAdminPassword} requiredRoles={['company_admin', 'system_admin']} />} />
             
           </Route>

@@ -22,11 +22,13 @@
     "dayjs": "^1.11.10",
     "jsqr": "^1.4.0",
     "jwt-decode": "^4.0.0",
+    "leaflet": "^1.9.4",
     "mdb-react-ui-kit": "^7.0.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
     "react-calendar": "^4.7.0",
     "react-dom": "^18.2.0",
+    "react-leaflet": "^4.2.1",
     "react-number-format": "^5.3.1",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.18.0",
@@ -58,5 +60,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.8",
+    "@types/react-router-dom": "^5.3.3"
   }
 }
