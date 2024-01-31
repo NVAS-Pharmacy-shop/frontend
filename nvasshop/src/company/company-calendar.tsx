@@ -26,6 +26,10 @@ const CompanyCalendar: React.FC = () => {
         fetchReservations();
     }, []);
 
+    useEffect(() => {
+        fetchReservations();
+    }, [selectedDate, selectedOption]);
+
     const handleDayClick = (date: Date) => {
         setSelectedDate(date);
     };
@@ -97,9 +101,9 @@ const CompanyCalendar: React.FC = () => {
                     </Select>
                 </FormControl>
 
-                <Button onClick={handleFetchButtonClick} className="fetch-button">
+                {/*<Button onClick={handleFetchButtonClick} className="fetch-button">
                     Fetch
-                </Button>
+                </Button>*/}
             </div>
 
         </Container>
