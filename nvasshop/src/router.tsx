@@ -23,6 +23,7 @@ import CompanyCalendar from "./company/company-calendar";
 import AdminHomePage from "./components/company-admin/home-page/home-page";
 import EquipmentDeliveringCalendar from "./components/company-admin/equipment-delivering/equipment-delivering-calendar";
 import ContractForm from "./hospital/add-contract-form";
+import ContractsOverview from "./components/company-admin/contracts-overview/contracts-overview";
 
 const AppRoutes = () => {
   return (
@@ -72,7 +73,8 @@ const AppRoutes = () => {
           <Route element={<CompanyCalendar />} path="/company/work-calendar/" />
           <Route element={<AdminHomePage />} path="/admin/homepage/" />
           <Route element={<EquipmentDeliveringCalendar />} path="/admin/equipment-reservations/" />
-        
+          <Route element={<ContractsOverview />} path="/admin/contracts-overview/" />
+
           <Route path="/hospital/create-contract/" element={<ContractForm />}/>
 
           
