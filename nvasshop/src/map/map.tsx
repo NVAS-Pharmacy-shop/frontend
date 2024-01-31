@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import { LatLngTuple, Icon } from 'leaflet';
-import './map.css'; // Import the CSS file
+import './map.css';
 import "leaflet/dist/leaflet.css";
 import api from '../api';
 
@@ -26,8 +26,8 @@ const MapComponent: React.FC = () => {
 
             if (data.coordinates) {
                 let newMarker = {
-                    geocode: data.coordinates, // assuming data.coordinates is an array with two elements
-                    popUp: 'Current position' // replace with the actual popup content
+                    geocode: data.coordinates,
+                    popUp: 'Current position'
                 };
                 console.log(newMarker)
                 setMarkers([newMarker]);
@@ -61,7 +61,7 @@ const MapComponent: React.FC = () => {
 
     const handleButtonClick = async () => {
         try {
-            const response = await api.post(`locationsim/coordinates/`, {}, {
+            const response = await api.post(`locationsim/coordinates/`, {updateFrequency}, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -93,7 +93,7 @@ const MapComponent: React.FC = () => {
                     <option value="60">1min</option>
                 </select>
             </div>
-            <MapContainer center={[48.8566, 2.3522]} zoom={13} className="map-container" >
+            <MapContainer center={[45.261891, 19.831375]} zoom={13} className="map-container" >
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
