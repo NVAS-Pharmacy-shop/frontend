@@ -56,7 +56,7 @@ const MapComponent: React.FC = () => {
 
     const truckIcon = new Icon({
         iconUrl: process.env.PUBLIC_URL + '/truckMarker.png',
-        iconSize: [65, 65]
+        iconSize: [38, 38]
     })
 
     const handleButtonClick = async () => {
@@ -89,6 +89,8 @@ const MapComponent: React.FC = () => {
                 <select className="frequency-select" value={updateFrequency} onChange={handleFrequencyChange}>
                     <option value="1">1s</option>
                     <option value="3">3s</option>
+                    <option value="5">5s</option>
+                    <option value="10">10s</option>
                     <option value="30">30s</option>
                     <option value="60">1min</option>
                 </select>
