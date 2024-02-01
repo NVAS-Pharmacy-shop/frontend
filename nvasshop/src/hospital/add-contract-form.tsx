@@ -2,13 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { MenuItem, FormControl, Select, InputLabel, TextField, Button, Grid, SelectChangeEvent } from '@mui/material';
 import { DatePicker, DateTimePicker, LocalizationProvider, TimePicker, renderTimeViewClock } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import getAllCompanies, { getCompanies, getCompanyEquipment } from '../service/https/company-service';
+import { getCompanies } from '../service/https/company-service';
 import Company from '../company/company-component';
 import { Equipment } from '../model/company';
-import dayjs, { Dayjs } from "dayjs";
 import axios from 'axios';
 import './add-contract-form.css';
-import StaticTimePicker from '@mui/lab/StaticTimePicker';
 
 const companies = ['Company A', 'Company B', 'Company C']; // Sample list of companies
 
@@ -55,8 +53,7 @@ function ContractForm(){
         }
     };
     
-    
-    
+
     
     const handleQuantityChange = (equipmentId: number, name: string, quantity: number) => {
         setEquipmentList(prevEquipmentList => {
@@ -77,33 +74,24 @@ function ContractForm(){
     };
 
     const handleSubmit = async () => {
-        // Check if all required fields are filled
         if (!company || !date || equipmentList.length === 0) {
             console.error("Missing required fields");
             return;
         }
-        
-        // Construct the data object
         const requestData = {
-            hospital_id: 1, // Assuming `id` is the hospital ID
-            date: date, // Convert date to ISO string format if date is not null
-            company: company.id, // Convert company ID to string
+            hospital_id: 1, 
+            date: date,
+            company: company.id, 
             
-
-            // Map equipmentList to the desired format
             equipment: equipmentList.map(item => ({
                 equipment_id: item.equipment_id,
                 quantity: item.quantity
             }))
         };
-        console.log(date);
         const response = await axios.post('http://localhost:8008/api/contract/make-contract/', requestData);
         console.log('Contract created:', response.data);
 
         try {
-            // Perform API call to submit the form data
-            // Example:
-            // const response = await submitFormData(requestData);
             console.log("Form submitted successfully:", requestData);
         } catch (error) {
             console.error("Error submitting form:", error);
