@@ -57,6 +57,14 @@ function Header() {
               </NavDropdown>
             )}
 
+          {user && user.role === 'employee' && (
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Nav.Link as={Link} to="/usersReservations">
+                  My Reservations
+                </Nav.Link>
+              </div>
+            )}
+
             {user && user.role === 'company_admin' && (
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <NavDropdown title="Calendar">
