@@ -23,6 +23,8 @@ import CompanyCalendar from "./company/company-calendar";
 import PrivateRoute from "./privateRoute";
 import AdminHomePage from "./components/company-admin/home-page/home-page";
 import EquipmentDeliveringCalendar from "./components/company-admin/equipment-delivering/equipment-delivering-calendar";
+import UserReservations from "./pages/UserReservations";
+
 const AppRoutes = () => {
   return (
     <Router>
@@ -33,6 +35,7 @@ const AppRoutes = () => {
 
             <Route path="/company/:id" element={<Company />}></Route> {/* Dodati guard, prepostavljam da je employee, nisam siguran */}
             <Route path="/equipment" element={ <EquipmentBrowser/> } />
+            <Route path="/usersReservations" element={<PrivateRoute component={UserReservations} requiredRoles={['employee']} />} />
 
             <Route path="/registerSystemAdmin" element={<PrivateRoute component={RegisterSytemAdmin} requiredRoles={['system_admin']} />} />
             <Route path="/registerCompanyAdmin" element={<PrivateRoute component={RegisterCompanyAdmin} requiredRoles={['system_admin']} />} />

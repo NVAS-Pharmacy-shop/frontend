@@ -2,6 +2,7 @@ import api from '../../api';
 import jsQR from 'jsqr';
 
 export interface Reservation {
+    reservation_id: number,
     date?: string | null;
     start_time: string;
     end_time: string;
@@ -36,6 +37,48 @@ export interface ReservedEquipment{
     equipment_name: string,
     quantity: number
 }
+
+const getReservtionsForUser =  async(userId: number): Promise<Reservation[]> => {
+    try{
+        const response = await api.get(`/company/reservations/user/${userId}/`, {
+            headers : {
+                'Content-Type' : 'application/json',
+            },
+        });
+        //console.log(response.data);
+
+        const reservations: Reservation[] = response.data.reservations.map((reservation: any) => {
+            const [shours, sminutes] = reservation.start_time.split(':');
+            const [ehours, eminutes] = reservation.end_time.split(':');
+            return {
+                reservation_id: reservation.reservation_id,
+                date: reservation.date,
+                start_time: `${shours}:${sminutes}`,
+                end_time: `${ehours}:${eminutes}`,
+                user_first_name: reservation.user_first_name,
+                user_last_name: reservation.user_last_name,
+            };
+        });
+
+        return reservations;
+    }catch(error){
+        console.error('Error getting reservations: ', error);
+        throw error;
+    }
+} 
+
+const cancelReservation =  async(resId: number): Promise<void> => {
+    try{
+        const response = await api.delete(`/company/reservations/${resId}/`, {
+            headers : {
+                'Content-Type' : 'application/json',
+            },
+        });
+    }catch(error){
+        console.error('Error getting reservations: ', error);
+        throw error;
+    }
+} 
 
 const getReservations = async(date: string, dateWindow: string): Promise<Reservation[]> => {
     try{
@@ -196,6 +239,8 @@ const pickupReservationQRCode = async(qrCodeImage: File): Promise<void> => {
 
 export const ReservationService = {
     getReservations,
+    cancelReservation,
+    getReservtionsForUser,
     getEquipmentReservations,
     pickupReservation,
     getReservationInfo,
