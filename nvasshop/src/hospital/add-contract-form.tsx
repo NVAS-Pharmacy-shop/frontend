@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { MenuItem, FormControl, Select, InputLabel, TextField, Button, Grid, SelectChangeEvent } from '@mui/material';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { DatePicker, DateTimePicker, LocalizationProvider, TimePicker, renderTimeViewClock } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import getAllCompanies, { getCompanies, getCompanyEquipment } from '../service/https/company-service';
 import Company from '../company/company-component';
 import { Equipment } from '../model/company';
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import axios from 'axios';
 import './add-contract-form.css';
+import StaticTimePicker from '@mui/lab/StaticTimePicker';
 
 const companies = ['Company A', 'Company B', 'Company C']; // Sample list of companies
 
@@ -25,7 +26,7 @@ function ContractForm(){
     const [equipmentList, setEquipmentList] = useState<{ equipment_id: number; quantity: number }[]>([]);
 
     const [quantity, setQuantity] = useState('');
-    const [date, setDate] = useState(null);
+    const [date, setDate] = useState<Date | null>(null);
 
     useEffect(() => {
         fetchCompanies();
@@ -81,12 +82,13 @@ function ContractForm(){
             console.error("Missing required fields");
             return;
         }
-
+        
         // Construct the data object
         const requestData = {
             hospital_id: 1, // Assuming `id` is the hospital ID
             date: date, // Convert date to ISO string format if date is not null
             company: company.id, // Convert company ID to string
+            
 
             // Map equipmentList to the desired format
             equipment: equipmentList.map(item => ({
@@ -94,7 +96,7 @@ function ContractForm(){
                 quantity: item.quantity
             }))
         };
-
+        console.log(date);
         const response = await axios.post('http://localhost:8008/api/contract/make-contract/', requestData);
         console.log('Contract created:', response.data);
 
@@ -157,11 +159,15 @@ function ContractForm(){
                     </Grid>
                     <Grid item xs={12}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DatePicker
+                            <DateTimePicker
                                 label="Select Date"
-                                defaultValue={dayjs()} 
+                                value={date}
                                 onChange={handleDateChange}
                                 disablePast
+                                viewRenderers={{
+                                    hours: renderTimeViewClock,
+                                    minutes: renderTimeViewClock,
+                                }}
                             />
                         </LocalizationProvider>
                     </Grid>

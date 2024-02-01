@@ -62,5 +62,6 @@ interface ContractEquipment {
 export interface Contract {
   contract_id: number;
   date: string;
+  status: string;
   equipment: ContractEquipment[];
 }
