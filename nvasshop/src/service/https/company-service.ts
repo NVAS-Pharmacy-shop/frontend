@@ -78,3 +78,20 @@ export const getCompanyContracts = async () : Promise<Contract[]> => {
 }
 
 
+export const cancelContract = async (contract_id: number): Promise<void> => {
+  try {
+    const response = await api.put(`/company/contracts/`, { contract_id }, {
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+    console.log(response.data); 
+    return;
+  } catch (error) {
+    console.error('Error cancelling contract: ', error);
+    throw error;
+  }
+};
+
+
+

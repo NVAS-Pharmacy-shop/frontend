@@ -17,11 +17,12 @@ import {
   TextField,
 } from "@mui/material";
 import { Contract } from "../../../model/company";
-import { getCompanyContracts } from "../../../service/https/company-service";
-import { format } from 'date-fns';
+import { cancelContract, getCompanyContracts } from "../../../service/https/company-service";
+import { format, set } from 'date-fns';
 
 function ContractsOverview(){
     const [contracts, setContracts] = useState<Contract[]>([]);
+    const [activeButton, setActiveButton] = useState(false);
 
     const fetchContracts = async () => {
         try {
@@ -38,9 +39,19 @@ function ContractsOverview(){
         fetchContracts();
     }, []);
     
-    const handleCancel = (contractId: number) => {
-        // Handle cancel action
+    const handleCancel = async (contractId: number) => {
+        try {
+            await cancelContract(contractId);
+            fetchContracts();
+        }catch(error){
+            console.error("Error cancelling contract", error);
+        }
+
     };
+
+    const checkDisabled = (contractId: number) : boolean => {
+        return !(contracts.filter(contract => contract.contract_id === contractId)[0].status === "active");
+    }
 
     return(
         <div>
@@ -50,6 +61,7 @@ function ContractsOverview(){
                     <TableRow>
                         <TableCell>Contract ID</TableCell>
                         <TableCell>Date</TableCell>
+                        <TableCell>Status</TableCell>
                         <TableCell>Equipment Name</TableCell>
                         <TableCell>Contract Quantity</TableCell>
                         <TableCell>In Stock</TableCell>
@@ -61,18 +73,22 @@ function ContractsOverview(){
                         <React.Fragment key={contract.contract_id}>
                             {contract.equipment.map((equipment, index) => (
                                 <TableRow key={`${contract.contract_id}-${equipment.equipment_id}`}>
-                                    {index === 0 && ( // Only display contract ID and date for the first equipment
+                                    {index === 0 && ( 
                                         <React.Fragment>
                                             <TableCell rowSpan={contract.equipment.length}>{contract.contract_id}</TableCell>
                                             <TableCell rowSpan={contract.equipment.length}>{format(new Date(contract.date), 'dd/MM/yyyy HH:mm:ss')}</TableCell>
+                                            <TableCell rowSpan={contract.equipment.length}>{contract.status}</TableCell>
                                         </React.Fragment>
                                     )}
                                     <TableCell>{equipment.name}</TableCell>
                                     <TableCell>{equipment.contract_quantity}</TableCell>
                                     <TableCell>{equipment.quantity}</TableCell>
-                                    {index === 0 && ( // Only display cancel button for the first equipment
+                                    {index === 0 && ( 
                                         <TableCell rowSpan={contract.equipment.length}>
-                                            <Button variant="contained" color="secondary" onClick={() => handleCancel(contract.contract_id)}>
+                                            <Button variant="contained" 
+                                                color="secondary" 
+                                                onClick={() => handleCancel(contract.contract_id)}
+                                                disabled={checkDisabled(contract.contract_id)}>
                                                 Cancel
                                             </Button>
                                         </TableCell>
