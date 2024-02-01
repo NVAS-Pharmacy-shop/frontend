@@ -44,6 +44,11 @@ const WorkCalendar = () => {
     navigate("/add-pickup-schedule/");
   };
 
+  const tileDisabled = ({ date, view }: { date: Date; view: string }) => {
+    const today = new Date();
+    today.setDate(today.getDate() - 1);
+    return date < today;
+};
   return (
     <Container className="container">
       <Typography variant="h4" gutterBottom>
@@ -53,6 +58,7 @@ const WorkCalendar = () => {
         <Calendar
           className="work-calendar"
           value={selectedDate}
+          tileDisabled={tileDisabled}
           tileContent={({ date }) => {
             const dateSchedules = schedules.filter((term) => {
               if (term.date !== undefined && term.date !== null) {

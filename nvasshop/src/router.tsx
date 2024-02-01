@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { render } from "react-dom";
 import React from "react";
+import { AuthProvider } from "./context/AuthContext";
 import Company from "./company/company-component";
 import CompanyUpdate from "./components/company-admin/company-overview/company-edit";
 import EquipmentBrowser from "./equipment/equipment-browser";
@@ -12,7 +13,6 @@ import CompaniesOverview from "./company/companies-overview";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import { AuthProvider } from "./context/AuthContext";
 import Header from "./components/Header";
 import HomePage from "./pages/HomePage";
 import AddPickupSchedule from "./components/company-admin/pickup-schedule/add-schedule/add-pickup-schedule";
@@ -24,6 +24,9 @@ import PrivateRoute from "./privateRoute";
 import AdminHomePage from "./components/company-admin/home-page/home-page";
 import EquipmentDeliveringCalendar from "./components/company-admin/equipment-delivering/equipment-delivering-calendar";
 import UserReservations from "./pages/UserReservations";
+import MapComponent from "./map/map";
+import ContractForm from "./hospital/add-contract-form";
+import ContractsOverview from "./components/company-admin/contracts-overview/contracts-overview";
 
 const AppRoutes = () => {
   return (
@@ -48,6 +51,7 @@ const AppRoutes = () => {
             <Route path="/add-pickup-schedule/" element={<PrivateRoute component={AddPickupSchedule} requiredRoles={['company_admin']} />} />
             <Route path="/admin/equipment-reservations/" element={<PrivateRoute component={EquipmentDeliveringCalendar} requiredRoles={['company_admin']} />} />
             <Route path="/admin/homepage/" element={<PrivateRoute component={AdminHomePage} requiredRoles={['company_admin']} />} />
+            <Route path="/map/" element={<PrivateRoute component={MapComponent} requiredRoles={['company_admin']} />} />
             <Route path="/admin/change-password/" element={<PrivateRoute component={ChangeCompanyAdminPassword} requiredRoles={['company_admin', 'system_admin']} />} />
             
           </Route>
@@ -55,6 +59,15 @@ const AppRoutes = () => {
           <Route path="/companies" element={<CompaniesOverview />}></Route>
           <Route element={<LoginPage />} path="/login" />
           <Route element={<RegisterPage />} path="/register" />
+          <Route element={<WorkCalendar />} path="/admin/work-calendar/" />
+          <Route element={<CompanyCalendar />} path="/company/work-calendar/" />
+          <Route element={<AdminHomePage />} path="/admin/homepage/" />
+          <Route element={<EquipmentDeliveringCalendar />} path="/admin/equipment-reservations/" />
+          <Route element={<ContractsOverview />} path="/admin/contracts-overview/" />
+
+          <Route path="/hospital/create-contract/" element={<ContractForm />}/>
+
+          
         </Routes>
       </AuthProvider>
     </Router>

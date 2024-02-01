@@ -50,3 +50,18 @@ export interface Customer {
   last_name: string;
   email: string;
 }
+
+
+interface ContractEquipment {
+  equipment_id: number;
+  name: string;
+  contract_quantity: number;
+  quantity: number;
+}
+
+export interface Contract {
+  contract_id: number;
+  date: string;
+  status: string;
+  equipment: ContractEquipment[];
+}

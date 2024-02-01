@@ -84,6 +84,10 @@ function Header() {
                 <Nav.Link as={Link} to="/updateAdminProfile">
                   My Profile
                 </Nav.Link>
+
+                <Nav.Link as={Link} to="/map">
+                  Map
+                </Nav.Link>
               </div>
             )}
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import api from '../api';
 import './equipment-browser.css';
 import { useParams } from 'react-router-dom';
 import { getCompanyId } from "../service/https/company-admin-service";
@@ -77,7 +78,7 @@ const EquipmentBrowser = () => {
             return;
         }
         try {
-            const response = await axios.get(`http://127.0.0.1:8000//api/company/base_info/${id}`);
+            const response = await api.get(`/company/base_info/${id}`);
             setCompanies((prevCompanies) => ({ ...prevCompanies, [id]: response.data.company }));
         } catch (error) {
             console.error('Error fetching company:', error);
@@ -89,7 +90,7 @@ const EquipmentBrowser = () => {
             const nonEmptyFilters = Object.fromEntries(
                 Object.entries(filters).filter(([key, value]) => value !== '')
             );
-            const response = await axios.get('http://127.0.0.1:8000//api/company/equipment/', { params: nonEmptyFilters });
+            const response = await api.get('/company/equipment/', { params: nonEmptyFilters });
             setEquipment(response.data.equipment);
             const uniqueCompanyIds = new Set<string>(response.data.equipment.map((item: Equipment) => item.company.toString()));
             uniqueCompanyIds.forEach((id: string) => fetchCompany(id));
