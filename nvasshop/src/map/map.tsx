@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import { LatLngTuple, Icon } from 'leaflet';
 import './map.css';
 import "leaflet/dist/leaflet.css";
 import api from '../api';
 
+function MapClickHandler({ onClick }: { onClick: (e: any) => void }) {
+    useMapEvents({
+        click: onClick,
+    });
+
+    return null;
+}
+
+type MarkerType = {
+    geocode: [number, number];
+    popUp: string;
+};
+
 const MapComponent: React.FC = () => {
 
-    type MarkerType = {
-        geocode: [number, number];
-        popUp: string;
-    };
-
-    const [startEndMarkers, setStartEndMarkers] = useState<MarkerType[]>([]);
     const [markers, setMarkers] = useState<MarkerType[]>([]);
+    const [clickMarkers, setClickMarkers] = useState<MarkerType[]>([]);
+    const [startMarker, setStartMarker] = useState<MarkerType | null>(null);
+    const [endMarker, setEndMarker] = useState<MarkerType | null>(null);
+    const [activeMarker, setActiveMarker] = useState<'start' | 'end' | null>(null);
+
     const [updateFrequency, setUpdateFrequency] = useState('1');
 
     useEffect(() => {
@@ -56,18 +68,26 @@ const MapComponent: React.FC = () => {
         iconSize: [38, 38]
     })
 
-    const handleButtonClick = async () => {
+    const handleStartDeliveryClick = async () => {
         try {
-            const response = await api.post(`locationsim/coordinates/`, {updateFrequency}, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            const { start_coordinates, end_coordinates } = response.data;
-            setStartEndMarkers([
-                { geocode: start_coordinates, popUp: 'Start point' },
-                { geocode: end_coordinates, popUp: 'End point' }
-            ]);
+            if (startMarker && endMarker) 
+            {
+                const start_coordinates = startMarker.geocode;
+                const end_coordinates = endMarker.geocode;
+                const response = await api.post(`locationsim/coordinates/`,
+                { 
+                    updateFrequency, 
+                    start_coordinates, 
+                    end_coordinates 
+                }, 
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                console.log('Response: ', response);
+            }
+            
         } catch (error) {
             console.error('Error asking for coordinates: ', error);
             throw error;
@@ -78,9 +98,36 @@ const MapComponent: React.FC = () => {
         setUpdateFrequency(event.target.value);
     };
 
+    const addMarker = (e: any) => {
+        const newMarker: MarkerType = {
+            geocode: [e.latlng.lat, e.latlng.lng],
+            popUp: activeMarker === 'start' ? 'Start location' : 'End location'
+        };
+
+        if (activeMarker === 'start') {
+            setStartMarker(newMarker);
+            setActiveMarker(null);
+        } else if (activeMarker === 'end') {
+            setEndMarker(newMarker);
+            setActiveMarker(null);
+        }
+    };
+
+    const handleStartClick = () => {
+        setActiveMarker('start');
+    };
+
+    const handleEndClick = () => {
+        setActiveMarker('end');
+    };
+
     return (
         <div className="parent-div">
-            <button onClick={handleButtonClick} className='start-button'>Start delivery</button>
+            <div className="buttons-div">
+                <button onClick={handleStartClick} disabled={activeMarker === 'end'} className='marker-button'>Add start marker</button>
+                <button onClick={handleStartDeliveryClick} className='start-button'>Start delivery</button>
+                <button onClick={handleEndClick} disabled={activeMarker === 'start'} className='marker-button'>Add end marker</button>
+            </div>
             <div className="frequency-div">
                 Update frequency:
                 <select className="frequency-select" value={updateFrequency} onChange={handleFrequencyChange}>
@@ -92,20 +139,23 @@ const MapComponent: React.FC = () => {
                     <option value="60">1min</option>
                 </select>
             </div>
-            <MapContainer center={[45.261891, 19.831375]} zoom={13} className="map-container" >
+            <MapContainer center={[45.261891, 19.831375]} zoom={13} className="map-container">
+                <MapClickHandler onClick={addMarker} />
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                {startEndMarkers.map(marker => (
-                    <Marker position={marker.geocode as LatLngTuple} icon={markerIcon}>
+                {startMarker && <Marker position={startMarker.geocode} icon={markerIcon}><Popup>{startMarker.popUp}</Popup></Marker>}
+                {endMarker && <Marker position={endMarker.geocode} icon={markerIcon}><Popup>{endMarker.popUp}</Popup></Marker>}
+                {markers.map(marker => (
+                    <Marker position={marker.geocode as LatLngTuple} icon={truckIcon}>
                         <Popup>
                             <p style={{ fontSize: '1.3em' }}>{marker.popUp}</p>
                         </Popup>
                     </Marker>
                 ))}
-                {markers.map(marker => (
-                    <Marker position={marker.geocode as LatLngTuple} icon={truckIcon}>
+                {clickMarkers.map((marker, index) => (
+                    <Marker key={index} position={marker.geocode as LatLngTuple} icon={markerIcon}>
                         <Popup>
                             <p style={{ fontSize: '1.3em' }}>{marker.popUp}</p>
                         </Popup>

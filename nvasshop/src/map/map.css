@@ -12,6 +12,14 @@
     flex-direction: column;
 }
 
+.buttons-div {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    gap: 3em;
+    margin-top: 1em;
+}
+
 .start-button {
     padding: 0.5em 1em;
     color: white;
@@ -20,10 +28,17 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: large;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 1em;
-  }
+}
+
+.marker-button {
+    padding: 0.5em 1em;
+    color: white;
+    background-color: green;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: large;
+}
 
   .frequency-div {
     font-size: 1.1em;

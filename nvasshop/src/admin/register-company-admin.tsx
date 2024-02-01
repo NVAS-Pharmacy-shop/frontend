@@ -23,7 +23,7 @@ const RegisterCompanyAdmin: React.FC = () => {
 
     const fetchCompanies = async () => {
         try {
-            const response = await axios.get('http://127.0.0.1:8000/api/company/base_info/');
+            const response = await api.get('/company/base_info/');
             setCompanies(response.data.companies);
         } catch (error) {
             console.error('Failed to fetch companies:', error);

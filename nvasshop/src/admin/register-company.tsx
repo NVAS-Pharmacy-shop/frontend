@@ -22,7 +22,7 @@ const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
             website,
         };
         
-        api.post('http://127.0.0.1:8000/api/company/', newCompany, {
+        api.post('/company/', newCompany, {
             headers: {
                 'Content-Type': 'application/json',
               },
