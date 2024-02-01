@@ -1,35 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LocalizationProvider, StaticDatePicker, TimePicker, renderTimeViewClock } from "@mui/x-date-pickers";
 import { DatePicker, StaticTimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
-import { Button, Slider, TextField } from "@mui/material";
+import { Button, InputLabel, MenuItem, Select, Slider, TextField } from "@mui/material";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import "./add-pickup-schedule.css";
 import { createPickupSchedule } from "../../../../service/https/pickup-schedule-service";
 import { PickupSchedule, PickupScheduleInput } from "../../../../model/company";
 import { useNavigate } from "react-router-dom";
 import Alert from '@mui/material/Alert';
+import { getCompanyAdmins } from "../../../../service/https/company-admin-service";
 
 const AddPickupSchedule = () => {
     const[formData, setFormData] = useState({
         administrator_firstName: '',
         administrator_lastName: '',
+        administrator_name: '',
         date: null,
         start_time: dayjs(),
         duration_minutes: 0
     });
-    const [error, setError] = useState<string | null>(null);
-    const navigate = useNavigate();
-    
-    const handleChange = (e: { target: { name: any; value: any; }; }) => {
-        const {name, value} = e.target;
-        setFormData((prevData) => ({...prevData, [name]: value}));
-        console.log(formData);
-    };
 
+    const [error, setError] = useState<string | null>(null);
+
+    const [admins, setAdmins] = useState<any[] | null>(null);
+    const [selectedOption, setSelectedOption] = useState('');
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        fetchAdmins();
+    }, []);
+
+    useEffect(() => {
+    }
+    , [selectedOption]);
+    
     const handleSpecialChange = (name: any, value: any) => {
         setFormData((prevData) => ({ ...prevData, [name]: value }));
-        console.log(formData);
     };
     
     const handleDateChange = (date : any) => {
@@ -45,16 +53,30 @@ const AddPickupSchedule = () => {
         handleSpecialChange("duration_minutes", value);
     };
 
+    const fetchAdmins = async() => {
+        try{
+            const admins = await getCompanyAdmins();
+            setAdmins(admins);
+        } catch(error) {
+            console.error('Error getting admins: ', error);
+        }
+    }
+
+    const handleSelectChange = (event : any) => {
+        setSelectedOption(event.target.value);
+    }
+
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
+            const parts = selectedOption.split(' ');
             const pickupScheduleData: PickupScheduleInput = {
                 date: formData.date ? (formData.date as dayjs.Dayjs).format('YYYY-MM-DD') : null,
                 start_time: formData.start_time ? formData.start_time.format('HH:mm') : '',
                 duration_minutes: formData.duration_minutes,
-                first_name: formData.administrator_firstName,
-                last_name: formData.administrator_lastName
+                first_name: parts[0],
+                last_name: parts[1]
             };
             await createPickupSchedule(pickupScheduleData);
             navigate("/admin/work-calendar/")
@@ -66,14 +88,26 @@ const AddPickupSchedule = () => {
     return(
         <div className="form-container">
             <form className="form-class" onSubmit={handleSubmit}>
-                <TextField name="administrator_firstName" label="First name" className="add-schedule-input"
-                variant="standard" value={formData.administrator_firstName} onChange={handleChange} required />
-                <TextField name="administrator_lastName" label="Last name"  required className="add-schedule-input"
-                variant="standard" value={formData.administrator_lastName} onChange={handleChange}/>
-
+                <InputLabel id="select-label">Select admin</InputLabel>
+                <Select
+                    id="select"
+                    className="select-admin"
+                    value={selectedOption}
+                    onChange={handleSelectChange}
+                    labelId="select-label" // Associate this with the InputLabel
+                    aria-label="Select admin" // ARIA label for accessibility
+                >
+                    {admins && admins.map((admin) => (
+                        <MenuItem key={admin.id} value={admin.first_name + ' ' +admin.last_name}>
+                            {admin.first_name} {admin.last_name}
+                        </MenuItem>
+                    ))}
+                </Select>
+            
                 <div className = "pickeri">
                     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="'en-us'">
                         <DatePicker 
+                        className="date-picker-pickup-schedule"
                         defaultValue={dayjs()} 
                         onChange={handleDateChange}
                         disablePast/>
@@ -82,6 +116,7 @@ const AddPickupSchedule = () => {
                     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="'en-us'">
                         <TimePicker 
                         defaultValue={dayjs()} 
+                        className="date-picker-pickup-schedule"
                         value={formData.start_time} 
                         onChange={handleTimeChange}
                         viewRenderers={{

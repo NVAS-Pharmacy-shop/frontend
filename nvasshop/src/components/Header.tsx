@@ -14,7 +14,7 @@ function Header() {
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
 
-        <Navbar.Brand href="/">
+        <Navbar.Brand>
           <img src="/LogoNVAS.png" width={150} height={50} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -76,14 +76,6 @@ function Header() {
                     Company Calendar
                   </NavDropdown.Item>
                 </NavDropdown>
-
-                <Nav.Link as={Link} to="/admin/company-overview">
-                  My Company
-                </Nav.Link>
-
-                <Nav.Link as={Link} to="/updateAdminProfile">
-                  My Profile
-                </Nav.Link>
 
                 <Nav.Link as={Link} to="/map">
                   Map

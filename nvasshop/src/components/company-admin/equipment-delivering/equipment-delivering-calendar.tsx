@@ -21,9 +21,8 @@ const EquipmentDeliveringCalendar = () => {
         try {
             const reservations = await ReservationService.getEquipmentReservations();
             setReservations(reservations);
-            console.log(reservations);
         } catch (error) {
-            console.log("Error fetching reservations", error);
+            console.error("Error fetching reservations", error);
         }
     }
 

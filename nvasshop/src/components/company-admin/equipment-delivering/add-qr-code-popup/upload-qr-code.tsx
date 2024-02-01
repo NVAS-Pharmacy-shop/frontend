@@ -40,7 +40,6 @@ function UploadImageDialog({ open, onClose }: UploadImageDialogProps) {
         if (selectedImage) {
             try {
                 await ReservationService.pickupReservationQRCode(selectedImage);
-                console.log('Reservation delivered successfully');
             } catch (error) {
                 console.error('Error delivering reservation: ', error);
             }

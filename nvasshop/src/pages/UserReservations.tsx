@@ -12,7 +12,6 @@ const UserReservations = () => {
    const [reservations, setReservations] = useState<Reservation[]>([]);
 
    useEffect(() => {
-    console.log(user);
     fetchReservations();
     }, []);
 

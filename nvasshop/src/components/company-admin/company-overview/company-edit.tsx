@@ -133,7 +133,6 @@ function CompanyUpdate() {
     api
       .get(`http://127.0.0.1:8000/api/company/admin/`)
       .then((response) => {
-        console.log(response.data);
         setCompany(response.data.company);
         setEditedCompany(response.data.company);
       })
@@ -152,7 +151,7 @@ function CompanyUpdate() {
       const schedules = await getSchedules();
       setSchedules(schedules);
     } catch (error) {
-      console.log('Error fetching equipment data.', error);
+      console.error('Error fetching equipment data.', error);
     }
   };
   

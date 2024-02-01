@@ -22,14 +22,12 @@ const MapComponent: React.FC = () => {
 
         chatSocket.onmessage = function (e) {
             let data = JSON.parse(e.data);
-            console.log('Data: ', data);
 
             if (data.coordinates) {
                 let newMarker = {
                     geocode: data.coordinates,
                     popUp: 'Current position'
                 };
-                console.log(newMarker)
                 setMarkers([newMarker]);
             } else {
                 console.error('Coordinates are undefined');
@@ -37,7 +35,6 @@ const MapComponent: React.FC = () => {
         };
 
         chatSocket.onopen = function (e) {
-            console.log('WebSocket is open');
         };
 
         chatSocket.onerror = function (error) {

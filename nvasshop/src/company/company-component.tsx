@@ -112,11 +112,9 @@ function Company() {
           pickup_schedule_id: selectedPickupSchedule,
         };
       }
-
       api
         .post(`/company/reserve/`, reserveItem)
         .then((response) => {
-          console.log(response);
         })
         .then(() => {
           setReservedItems([]);

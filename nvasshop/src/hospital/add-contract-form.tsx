@@ -34,7 +34,6 @@ function ContractForm(){
         try{
             const companies = await getCompanies();
             setCompanies(companies);
-            console.log('Companies: ', companies)
         }catch(error) {
             console.error('Error getting equipment: ', error);
         }
@@ -46,7 +45,6 @@ function ContractForm(){
         if (selectedCompany) {
             setCompany(selectedCompany);
             setEquipment(selectedCompany.equipment);
-            console.log("EQUIPMENT: ", selectedCompany.equipment);
         } else {
             setCompany(null);
             setEquipment(null);
@@ -70,7 +68,6 @@ function ContractForm(){
 
     const handleDateChange = (date : any) => {
         setDate(date);
-        console.log(date);
     };
 
     const handleSubmit = async () => {
@@ -89,10 +86,7 @@ function ContractForm(){
             }))
         };
         const response = await axios.post('http://localhost:8008/api/contract/make-contract/', requestData);
-        console.log('Contract created:', response.data);
-
         try {
-            console.log("Form submitted successfully:", requestData);
         } catch (error) {
             console.error("Error submitting form:", error);
         }

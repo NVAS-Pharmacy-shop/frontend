@@ -43,7 +43,6 @@ const CompanyCalendar: React.FC = () => {
         try {
             const formattedDate = dayjs(selectedDate).format('YYYY-MM-DD');
             const reservations = await ReservationService.getReservations(formattedDate, selectedOption);
-            console.log(reservations)
             setReservations(reservations);
         } catch (error) {
             console.log("Error fetching reservations data.", error);
@@ -101,9 +100,6 @@ const CompanyCalendar: React.FC = () => {
                     </Select>
                 </FormControl>
 
-                {/*<Button onClick={handleFetchButtonClick} className="fetch-button">
-                    Fetch
-                </Button>*/}
             </div>
 
         </Container>

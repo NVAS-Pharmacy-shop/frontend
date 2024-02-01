@@ -8,6 +8,8 @@ import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import { Link } from 'react-router-dom';
 import "./home-page.css";
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import MapIcon from '@mui/icons-material/Map';
 
 function AdminHomePage() {
     const[customers, setCustomers] = useState<Customer[]>();
@@ -16,7 +18,6 @@ function AdminHomePage() {
         try {
             const customers = await getCompanyCustomers();
             setCustomers(customers);
-            console.log(customers);
             
         }catch(error) {
             console.error("Error fetching customer data", error);
@@ -48,10 +49,17 @@ function AdminHomePage() {
                     <Link to="/add-pickup-schedule" className="link-button">Add Schedule <EditCalendarIcon /></Link>
                 </div>
                 <div className="link">
-                    <Link to="/admin/company-overview/" className="link-button">Company info <InfoIcon /></Link>
+                    <Link to="/admin/equipment-reservations/" className="link-button">Reservations <EventAvailableIcon /></Link>
                 </div>
                 <div className="link">
-                    <Link to="/admin/equipment-reservations/" className="link-button">Reservations <EventAvailableIcon /></Link>
+                    <Link to="/map/" className="link-button">Track delivery <MapIcon /></Link>
+                </div>
+                <hr className="custom-line"></hr>
+                <div className="link">
+                    <Link to="/admin/update-profile/" className="link-button">Edit profile <AccountCircleIcon /></Link>
+                </div>
+                <div className="link">
+                    <Link to="/admin/company-overview/" className="link-button">Company info <InfoIcon /></Link>
                 </div>
             </div>
             <div className = "right_panel">

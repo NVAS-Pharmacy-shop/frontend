@@ -28,7 +28,6 @@ function ContractsOverview(){
         try {
           const contractsData = await getCompanyContracts();
           setContracts(contractsData);
-          console.log(contractsData);
     
         } catch (error) {
           console.error("Error fetching equipment data", error);

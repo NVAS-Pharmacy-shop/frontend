@@ -18,7 +18,7 @@ const WorkCalendar = () => {
       const schedules = await getSchedules();
       setSchedules(schedules);
     } catch (error) {
-      console.log("Error fetching equipment data.", error);
+      console.error("Error fetching equipment data.", error);
     }
   };
 
