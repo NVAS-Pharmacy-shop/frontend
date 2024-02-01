@@ -78,9 +78,12 @@ function ContractForm(){
             console.error("Missing required fields");
             return;
         }
+        const currentTime = new Date();
+        const timeZoneOffset = currentTime.getTimezoneOffset();
         const requestData = {
             hospital_id: 1, 
-            date: date,
+            date: date.toISOString(),
+            timezone_offset: timeZoneOffset,
             company: company.id, 
             
             equipment: equipmentList.map(item => ({
