@@ -26,6 +26,10 @@ const CompanyCalendar: React.FC = () => {
         fetchReservations();
     }, []);
 
+    useEffect(() => {
+        fetchReservations();
+    }, [selectedDate, selectedOption]);
+
     const handleDayClick = (date: Date) => {
         setSelectedDate(date);
     };
@@ -39,7 +43,6 @@ const CompanyCalendar: React.FC = () => {
         try {
             const formattedDate = dayjs(selectedDate).format('YYYY-MM-DD');
             const reservations = await ReservationService.getReservations(formattedDate, selectedOption);
-            console.log(reservations)
             setReservations(reservations);
         } catch (error) {
             console.log("Error fetching reservations data.", error);
@@ -52,7 +55,7 @@ const CompanyCalendar: React.FC = () => {
 
     return (
         <Container className="container">
-            <h2  className='title'>
+            <h2 className='title'>
                 Company Calendar
             </h2>
 
@@ -76,7 +79,10 @@ const CompanyCalendar: React.FC = () => {
                                     {reservation.start_time} - {reservation.end_time}
                                 </Typography>
                                 <Typography variant="body2">
-                                    Employee: {reservation.user_first_name} {reservation.user_last_name}
+                                    {(reservation.user_first_name !== "Open" || reservation.user_last_name !== "appointment") ?
+                                        `Reservant: ${reservation.user_first_name} ${reservation.user_last_name}` :
+                                        `${reservation.user_first_name} ${reservation.user_last_name}`
+                                    }
                                 </Typography>
                             </div>
                         ));
@@ -94,9 +100,6 @@ const CompanyCalendar: React.FC = () => {
                     </Select>
                 </FormControl>
 
-                <Button onClick={handleFetchButtonClick} className="fetch-button">
-                    Fetch
-                </Button>
             </div>
 
         </Container>

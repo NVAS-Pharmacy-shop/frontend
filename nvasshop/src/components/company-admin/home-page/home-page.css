@@ -1,0 +1,88 @@
+.main-container 
+{
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100vh;
+}
+
+.right_panel
+{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 100%;
+    align-items: center;
+}
+
+.left_panel
+{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    background-color: #1976D2;
+    height: 100%;
+    align-items: center;
+}
+.link
+{
+    display: flex;
+    flex-direction: column;
+    margin-top:2rem;
+    align-items: center;
+}
+.link-button
+{
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+}
+.link-button:hover
+{
+    color: #BBDEFB;
+}
+.customers-table
+{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.data
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.data-sales
+{
+    width: 300px;
+    height: 200px;
+    margin: 20px;
+    border-radius: 5px;
+    background-color: #1976D2;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.data-sales:hover{
+    background-color: #1364b4;
+}
+.h3-data
+{
+    margin-top: 5px;
+}
+.custom-line {
+    border: 0;
+    height: 1px;
+    background-color: #f7f7f7;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}

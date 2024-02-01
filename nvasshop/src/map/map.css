@@ -1,0 +1,56 @@
+.map-container {
+    height: 75vh;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.parent-div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.buttons-div {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    gap: 3em;
+    margin-top: 1em;
+}
+
+.start-button {
+    padding: 0.5em 1em;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: large;
+}
+
+.marker-button {
+    padding: 0.5em 1em;
+    color: white;
+    background-color: green;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: large;
+}
+
+  .frequency-div {
+    font-size: 1.1em;
+    margin-top: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.frequency-select {
+    margin-left: 0.5em;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
