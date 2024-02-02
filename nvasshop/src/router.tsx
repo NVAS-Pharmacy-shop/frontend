@@ -15,6 +15,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Header from "./components/Header";
 import HomePage from "./pages/HomePage";
+import UserProfilePage from "./pages/UserProfilePage/UserProfilePage";
 import AddPickupSchedule from "./components/company-admin/pickup-schedule/add-schedule/add-pickup-schedule";
 import EquipmentAdmin from "./components/company-admin/company-overview/equipment-overview";
 import ChangeCompanyAdminPassword from "./components/company-admin/change-password/ChangePasswordPage";
@@ -35,7 +36,6 @@ const AppRoutes = () => {
         <Header />
         <Routes>
           <Route element={<PrivateRoutes />}>
-
             <Route path="/company/:id" element={<Company />}></Route> {/* Dodati guard, prepostavljam da je employee, nisam siguran */}
             <Route path="/equipment" element={ <EquipmentBrowser/> } />
             <Route path="/usersReservations" element={<PrivateRoute component={UserReservations} requiredRoles={['employee']} />} />
