@@ -62,6 +62,15 @@ function Header() {
                 <Nav.Link as={Link} to="/usersReservations">
                   My Reservations
                 </Nav.Link>
+                <Nav.Link as={Link} to="/user-profile">
+                  Profile
+                </Nav.Link>
+                <Nav.Link as={Link} to="/preuzimanja">
+                  Preuzimanja
+                </Nav.Link>
+                <Nav.Link as={Link} to="/qrcodes">
+                  QR Codes
+                </Nav.Link>
               </div>
             )}
 

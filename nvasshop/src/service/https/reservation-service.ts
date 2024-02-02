@@ -67,6 +67,35 @@ const getReservtionsForUser =  async(userId: number): Promise<Reservation[]> => 
     }
 } 
 
+const getDeliveredEquipment = async(): Promise<EquipmentReservation[]> => {
+    try{
+        const response = await api.get(`/company/delivered-equipment/`, {
+            headers : {
+                'Content-Type' : 'application/json',
+            },
+        });
+        //console.log(response.data);
+        
+        const deliveredEquipment: EquipmentReservation[] = response.data.delivered_equipment.map((reservation: any) => {
+            return {
+                reservation_id: reservation.reservation_id,
+                date: reservation.date,
+                equipment: reservation.equipment,
+                user_email: reservation.user_email,
+                user_first_name: reservation.user_first_name,
+                user_last_name: reservation.user_last_name,
+                status: reservation.status
+            };
+        });
+
+        return deliveredEquipment;
+    }catch(error){
+        console.error('Error getting delivered equipment: ', error);
+        throw error;
+    }
+}
+
+
 const cancelReservation =  async(resId: number): Promise<void> => {
     try{
         const response = await api.delete(`/company/reservations/${resId}/`, {
@@ -244,5 +273,6 @@ export const ReservationService = {
     getEquipmentReservations,
     pickupReservation,
     getReservationInfo,
-    pickupReservationQRCode
+    pickupReservationQRCode,
+    getDeliveredEquipment
 };

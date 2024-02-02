@@ -28,6 +28,8 @@ import UserReservations from "./pages/UserReservations";
 import MapComponent from "./map/map";
 import ContractForm from "./hospital/add-contract-form";
 import ContractsOverview from "./components/company-admin/contracts-overview/contracts-overview";
+import DeliveredPage from "./pages/DeliveredEquipmentPage"
+import QRCodePage from "./pages/QRCodePage";
 
 const AppRoutes = () => {
   return (
@@ -53,7 +55,9 @@ const AppRoutes = () => {
             <Route path="/admin/homepage/" element={<PrivateRoute component={AdminHomePage} requiredRoles={['company_admin']} />} />
             <Route path="/map/" element={<PrivateRoute component={MapComponent} requiredRoles={['company_admin']} />} />
             <Route path="/admin/change-password/" element={<PrivateRoute component={ChangeCompanyAdminPassword} requiredRoles={['company_admin', 'system_admin']} />} />
-            
+            <Route path="/user-profile" element={<PrivateRoute component={UserProfilePage} requiredRoles={['employee']}></PrivateRoute>}/>
+            <Route path="/preuzimanja" element={<PrivateRoute component={DeliveredPage} requiredRoles={['employee']}></PrivateRoute>}/>
+            <Route path="/qrcodes" element={<PrivateRoute component={QRCodePage} requiredRoles={['employee']}></PrivateRoute>}/>
           </Route>
           <Route path="/" element={<HomePage />}></Route>
           <Route path="/companies" element={<CompaniesOverview />}></Route>
