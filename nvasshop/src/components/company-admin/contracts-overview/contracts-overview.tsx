@@ -19,6 +19,7 @@ import {
 import { Contract } from "../../../model/company";
 import { cancelContract, getCompanyContracts } from "../../../service/https/company-service";
 import { format, set } from 'date-fns';
+import "./contracts-overview.css";
 
 function ContractsOverview(){
     const [contracts, setContracts] = useState<Contract[]>([]);
@@ -54,8 +55,8 @@ function ContractsOverview(){
 
     return(
         <div>
-            <TableContainer component={Paper}>
-            <Table aria-label="contract table">
+            <TableContainer className="table-container-contracts" component={Paper}>
+            <Table aria-label="contract table" className="contracts-table">
                 <TableHead>
                     <TableRow>
                         <TableCell>Contract ID</TableCell>
