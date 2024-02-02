@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }) => {
       setUser(jwtDecode(data.access));
       localStorage.setItem("authTokens", JSON.stringify(data));
       const u = jwtDecode(data.access);
-      if(u.first_login && u.role==='company_admin'){
+      if(u.first_login && (u.role==='company_admin' || u.role==='system_admin')){
         navigate("/admin/change-password/");
       }else{
         navigate("/");  

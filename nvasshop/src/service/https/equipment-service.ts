@@ -4,7 +4,7 @@ import { Equipment } from "../../model/company";
 
 export const getEquipment = async(): Promise<Equipment[]> => {
     try{
-        const response = await api.get(`/company/`, {
+        const response = await api.get(`/company/admin`, {
             headers: {
                 'Content-Type' : 'application/json',
             },

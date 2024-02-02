@@ -30,6 +30,7 @@ export default function ChangeCompanyAdminPassword() {
         try{
             if(newPassword === newPasswordConfirmation){
                 await changeAdminPassword(newPassword);
+                alert("Password changed successfully");
                 navigate("/");
             }else{
                 setErrorMessage('Passwords do not match');
