@@ -10,6 +10,7 @@ import "./home-page.css";
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MapIcon from '@mui/icons-material/Map';
+import GavelIcon from '@mui/icons-material/Gavel';
 
 function AdminHomePage() {
     const[customers, setCustomers] = useState<Customer[]>();
@@ -54,6 +55,10 @@ function AdminHomePage() {
                 <div className="link">
                     <Link to="/map/" className="link-button">Track delivery <MapIcon /></Link>
                 </div>
+                
+                <div className="link">
+                    <Link to="/admin/contracts-overview/" className="link-button">Contracts <GavelIcon /></Link>
+                </div>
                 <hr className="custom-line"></hr>
                 <div className="link">
                     <Link to="/admin/update-profile/" className="link-button">Edit profile <AccountCircleIcon /></Link>
@@ -74,7 +79,7 @@ function AdminHomePage() {
                     </div>
                     <div className = "data-sales">
                         <h3 className = "h3-data">Equipment</h3>
-                        <h1>154</h1>
+                        <h1>7</h1>
                     </div>
                 </div>
                 <div className = "customers-table">
@@ -82,8 +87,8 @@ function AdminHomePage() {
                     <Table sx={{ minWidth: 200 }} aria-label="simple table">
                         <TableHead>
                         <TableRow>
-                            <TableCell align="right">FirstName</TableCell>
-                            <TableCell align="right">Lastname</TableCell>
+                            <TableCell align="right">First name</TableCell>
+                            <TableCell align="right">Last name</TableCell>
                             <TableCell align="right">Email</TableCell>
                         </TableRow>
                         </TableHead>
